@@ -1,0 +1,74 @@
+package me.mrletsplay.secretreichstagandroid.fragment;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import me.mrletsplay.secretreichstagandroid.R;
+import me.mrletsplay.srweb.game.GameMode;
+
+public class RoomSettingsFragment extends Fragment {
+
+	private GameMode selectedGameMode;
+	private EditText
+			roomName,
+			maxPlayers;
+
+	@Nullable
+	@Override
+	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.room_settings, container, false);
+
+		Spinner gameMode = v.findViewById(R.id.game_mode);
+		GameMode[] gameModes = {GameMode.SECRET_HITLER, GameMode.SECRET_REICHSTAG};
+		gameMode.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, Arrays.asList("Secret Hitler", "Secret Reichstag")));
+		gameMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				selectedGameMode = gameModes[position];
+				System.out.println(selectedGameMode);
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) { }
+		});
+		gameMode.setSelection(0);
+
+		roomName = v.findViewById(R.id.room_name);
+		maxPlayers = v.findViewById(R.id.max_players);
+
+		return v;
+	}
+
+	public GameMode getSelectedGameMode() {
+		return selectedGameMode;
+	}
+
+	public String getRoomName() {
+		return roomName.getText().toString();
+	}
+
+	public int getMaxPlayers() {
+		if(maxPlayers.getText().length() == 0) return 0;
+		try {
+			return Integer.parseInt(maxPlayers.getText().toString());
+		}catch(NumberFormatException e) {
+			return 0;
+		}
+	}
+
+}

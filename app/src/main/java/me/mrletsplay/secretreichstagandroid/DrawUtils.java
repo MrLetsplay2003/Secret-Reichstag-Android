@@ -1,0 +1,33 @@
+package me.mrletsplay.secretreichstagandroid;
+
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+
+public class DrawUtils {
+
+	public static void drawBitmap(Canvas c, Bitmap b, int x, int y, int width, int height) {
+		Rect src = new Rect(0, 0, b.getWidth(), b.getHeight());
+		Rect dst = new Rect(x, y, x + width, y + height);
+		c.drawBitmap(b, src, dst, null);
+	}
+
+	public static void drawBitmapAutoH(Canvas c, Bitmap b, int x, int y, int width) {
+		drawBitmap(c, b, x, y, width, (int) ((double) b.getHeight() / b.getWidth() * width));
+	}
+
+	public static void drawBitmapAutoW(Canvas c, Bitmap b, int x, int y, int height) {
+		drawBitmap(c, b, x, y, (int) ((double) b.getWidth() / b.getHeight() * height), height);
+	}
+
+	public static void drawLinesCentered(Canvas c, Paint p, int centerX, int centerY, String... lines) {
+		float lineHeight = p.getFontMetrics().bottom - p.getFontMetrics().top;
+		Rect rect = new Rect();
+		for(int i = 0; i < lines.length; i++) {
+			p.getTextBounds(lines[i], 0, lines[i].length(), rect);
+			c.drawText(lines[i], centerX - rect.exactCenterX(), centerY - lineHeight * (lines.length - 1) / 2 + lineHeight * i - rect.exactCenterY(), p);
+		}
+	}
+
+}

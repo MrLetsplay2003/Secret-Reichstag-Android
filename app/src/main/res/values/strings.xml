@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Secret Reichstag</string>
+    <string name="button_new_room">New Room</string>
+    <string name="button_join_room">Join Room</string>
+    <string name="button_rejoin_room">Rejoin Room</string>
+    <string name="okay">Okay</string>
+    <string name="secret_hitler">Secret Hitler</string>
+    <string name="room_name_label">Room Name</string>
+    <string name="room_name_hint">Room Name</string>
+    <string name="max_players_label">Max Players</string>
+    <string name="max_players_hint">Max Players</string>
+    <string name="game_mode_label">Game Mode</string>
+    <string name="create_room">Create Room</string>
+    <string name="vote_yes">Vote Yes</string>
+    <string name="vote_no">Vote No</string>
+
+    <string name="card_active">card_active</string>
+    <string name="card_index">card_index</string>
+</resources>

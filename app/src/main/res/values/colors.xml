@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF000000</color>
+    <color name="colorPrimaryDark">#FF000000</color>
+    <color name="colorAccent">#FF000000</color>
+
+    <color name="black_overlay">#66000000</color>
+
+    <color name="teammate_communist">#8b0000</color>
+    <color name="teammate_fascist">#a35c2f</color>
+
+    <color name="leader_communist">#660000</color>
+    <color name="leader_fascist">#693b1e</color>
+
+    <color name="role_liberal">#004e6e</color>
+    <color name="role_communist">#8b0000</color>
+    <color name="role_fascist">#a35c2f</color>
+
+    <color name="board_background">#363835</color>
+    <color name="board_info_text">#ffa200</color>
+
+    <color name="board_communist_outer_fill">#8b0000</color>
+    <color name="board_communist_unsafe_fill">#660000</color>
+    <color name="board_communist_card_background">#c25439</color>
+    <color name="board_communist_title">#bf0003</color>
+
+    <color name="board_fascist_outer_fill">#a35c2f</color>
+    <color name="board_fascist_unsafe_fill">#693b1e</color>
+    <color name="board_fascist_card_background">#7d4624</color>
+    <color name="board_fascist_title">#693b1e</color>
+
+    <color name="board_liberal_outer_fill">#61c8d9</color>
+    <color name="board_liberal_card_background">#004e6e</color>
+    <color name="board_liberal_title">#004e6e</color>
+
+    <color name="board_liberal_election_tracker_active">#FFFF00</color>
+    <color name="board_liberal_election_tracker_inactive">#FFFFFF</color>
+
+    <color name="self">#008000</color>
+</resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="#ffffff"
+tools:context=".MainActivity">
+
+<LinearLayout
+    android:id="@+id/game_board_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" />
+
+    <me.mrletsplay.secretreichstagandroid.UIGameSurface
+        android:id="@+id/game_surface"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:textColor="#00000000"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/player_list_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <me.mrletsplay.secretreichstagandroid.ResizablePlayerList
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            app:layout_behavior=".ShrinkBehaviour">
+
+            <LinearLayout
+                android:id="@+id/player_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </me.mrletsplay.secretreichstagandroid.ResizablePlayerList>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</LinearLayout>
