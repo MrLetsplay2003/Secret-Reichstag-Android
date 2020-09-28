@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
 
 		new Thread(() -> {
 			try {
-				Networking.init(true);
+				Networking.init(false);
 
 				PacketClientConnect con = new PacketClientConnect();
 				con.setPlayerName(fr.getUsername());

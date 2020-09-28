@@ -10,11 +10,13 @@
         android:layout_height="50dp" />
 
     <TextView
+        android:id="@+id/pick_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/germania_one_regular"
         android:gravity="center_horizontal"
-        android:text="Select a player to be the next chancellor"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:textSize="18sp" />
 
     <Space
