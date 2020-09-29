@@ -1,20 +1,20 @@
-package me.mrletsplay.secretreichstagandroid;
+package me.mrletsplay.secretreichstagandroid.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.core.content.res.ResourcesCompat;
 
+import me.mrletsplay.secretreichstagandroid.GameAsset;
+import me.mrletsplay.secretreichstagandroid.MainActivity;
+import me.mrletsplay.secretreichstagandroid.R;
 import me.mrletsplay.srweb.game.state.GameParty;
 import me.mrletsplay.srweb.game.state.board.GameBoard;
 import me.mrletsplay.srweb.game.state.board.GameBoardActionField;

@@ -3,7 +3,11 @@ package me.mrletsplay.secretreichstagandroid;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
 
@@ -41,6 +45,12 @@ public enum GameAsset {
 	ICON_NOT_HITLER("icon/icon-not-hitler.png"),
 	ICON_NOT_STALIN("icon/icon-not-stalin.png"),
 	ICON_CONNECTION("icon/connection.png"),
+
+	ICON_ROLE_LIBERAL("icon/role-liberal.png"),
+	ICON_ROLE_FASCIST("icon/role-fascist.png"),
+	ICON_ROLE_HITLER("icon/role-hitler.png"),
+	ICON_ROLE_COMMUNIST("icon/role-communist.png"),
+	ICON_ROLE_STALIN("icon/role-stalin.png"),
 	;
 
 	public static final String ASSETS_URL = "https://graphite-official.com/projects/ss/assets/";
@@ -60,9 +70,26 @@ public enum GameAsset {
 		return ASSETS_URL + path;
 	}
 
-	public void load() {
+	public boolean load(File filesDir) {
 		try {
-			this.bitmap = BitmapFactory.decodeStream(new URL(getURL()).openStream());
+			File cachedFile = new File(filesDir, name() + ".png");
+			if(cachedFile.exists()) {
+				try(FileInputStream fIn = new FileInputStream(cachedFile)) {
+					this.bitmap = BitmapFactory.decodeStream(fIn);
+				}
+
+				return false;
+			}else {
+				try(InputStream in = new URL(getURL()).openStream()) {
+					this.bitmap = BitmapFactory.decodeStream(in);
+				}
+
+				try(FileOutputStream fOut = new FileOutputStream(cachedFile)) {
+					bitmap.compress(Bitmap.CompressFormat.WEBP, 100, fOut);
+				}
+
+				return true;
+			}
 		}catch(IOException e) {
 			throw new RuntimeException(e);
 		}

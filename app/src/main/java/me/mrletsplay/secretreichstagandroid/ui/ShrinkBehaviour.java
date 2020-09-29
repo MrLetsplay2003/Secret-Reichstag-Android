@@ -1,4 +1,4 @@
-package me.mrletsplay.secretreichstagandroid;
+package me.mrletsplay.secretreichstagandroid.ui;
 
 import android.content.Context;
 import android.util.AttributeSet;

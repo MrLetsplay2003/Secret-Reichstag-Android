@@ -70,7 +70,18 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="25dp"
         android:layout_weight="0" />
+
+    <Button
+        android:id="@+id/dialog_hide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="0"
+        android:fontFamily="@font/germania_one_regular"
+        android:text="Hide"
+        android:textSize="18sp" />
 
 </LinearLayout>

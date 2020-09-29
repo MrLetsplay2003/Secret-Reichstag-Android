@@ -16,4 +16,5 @@
 
     <string name="card_active">card_active</string>
     <string name="card_index">card_index</string>
+    <string name="button_settings">Settings</string>
 </resources>

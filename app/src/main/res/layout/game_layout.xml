@@ -14,7 +14,7 @@ tools:context=".MainActivity">
     android:layout_height="wrap_content"
     android:orientation="vertical" />
 
-    <me.mrletsplay.secretreichstagandroid.UIGameSurface
+    <me.mrletsplay.secretreichstagandroid.ui.UIGameSurface
         android:id="@+id/game_surface"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -29,18 +29,18 @@ tools:context=".MainActivity">
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <me.mrletsplay.secretreichstagandroid.ResizablePlayerList
+        <me.mrletsplay.secretreichstagandroid.ui.ResizablePlayerList
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FFFFFF"
-            app:layout_behavior=".ShrinkBehaviour">
+            app:layout_behavior=".ui.ShrinkBehaviour">
 
             <LinearLayout
                 android:id="@+id/player_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
-        </me.mrletsplay.secretreichstagandroid.ResizablePlayerList>
+        </me.mrletsplay.secretreichstagandroid.ui.ResizablePlayerList>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </LinearLayout>

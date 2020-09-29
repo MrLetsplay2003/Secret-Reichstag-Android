@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#df7258"
+    android:background="@color/reichstag"
     android:orientation="vertical">
 
     <Space
@@ -26,8 +26,8 @@
         android:ems="10"
         android:fontFamily="sans-serif"
         android:hint="@string/room_name_hint"
-        android:inputType="text"
-        android:importantForAutofill="no" />
+        android:importantForAutofill="no"
+        android:inputType="text" />
 
     <Space
         android:layout_width="match_parent"
@@ -49,8 +49,8 @@
         android:layout_weight="0"
         android:ems="10"
         android:hint="@string/max_players_hint"
-        android:inputType="number"
-        android:importantForAutofill="no" />
+        android:importantForAutofill="no"
+        android:inputType="number" />
 
     <Space
         android:layout_width="match_parent"

@@ -1,26 +1,23 @@
 package me.mrletsplay.secretreichstagandroid.fragment;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 
@@ -32,10 +29,10 @@ import java.util.Map;
 import me.mrletsplay.secretreichstagandroid.GameAsset;
 import me.mrletsplay.secretreichstagandroid.MainActivity;
 import me.mrletsplay.secretreichstagandroid.Networking;
-import me.mrletsplay.secretreichstagandroid.ResizablePlayerList;
-import me.mrletsplay.secretreichstagandroid.UIGameBoard;
+import me.mrletsplay.secretreichstagandroid.SerializationUtils;
+import me.mrletsplay.secretreichstagandroid.ui.UIGameBoard;
 import me.mrletsplay.secretreichstagandroid.R;
-import me.mrletsplay.secretreichstagandroid.UIGameSurface;
+import me.mrletsplay.secretreichstagandroid.ui.UIGameSurface;
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.game.state.GameParty;
 import me.mrletsplay.srweb.game.state.GameRole;
@@ -81,14 +78,14 @@ public class GameFragment extends Fragment {
 		playerList = v.findViewById(R.id.player_list);
 		gameSurface = v.findViewById(R.id.game_surface);
 
-		addPlayer(MainActivity.getSelfPlayer(), false);
+		addOrUpdatePlayer(MainActivity.getSelfPlayer());
 		for(Player pl : MainActivity.getRoom().getPlayers()) {
-			addPlayer(pl, false);
+			addOrUpdatePlayer(pl);
 		}
 		return v;
 	}
 
-	public void addPlayer(Player player, boolean showStartButton) {
+	public void addOrUpdatePlayer(Player player) {
 		playerList.post(() -> {
 			LinearLayout ll = playerElements.get(player.getID());
 			if(ll == null) {
@@ -180,11 +177,24 @@ public class GameFragment extends Fragment {
 
 			// TODO: was role
 
-			// if(MainActivity.getRoom().)
+			if(MainActivity.getPreviousRoles() != null && MainActivity.getPreviousRoles().has(player.getID())) {
+				try {
+					GameRole role = SerializationUtils.cast(MainActivity.getPreviousRoles().getJSONObject(player.getID()));
+					addIcon(ll, GameAsset.valueOf("ICON_ROLE_" + role.name()), s);
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
 
 			playerList.invalidate();
+		});
+	}
 
-			if(showStartButton && !MainActivity.getRoom().isGameRunning() && MainActivity.getRoom().getPlayers().size() == MainActivity.getRoom().getSettings().getPlayerCount()) {
+	public void showStartDialogIfNeeded() {
+		new Handler(Looper.getMainLooper()).post(() -> {
+			if(!MainActivity.getRoom().isGameRunning()
+					&& MainActivity.getRoom().getPlayers().size() == MainActivity.getRoom().getSettings().getPlayerCount()
+					&& MainActivity.getSelfPlayer().getID().equals(MainActivity.getRoom().getPlayers().get(0).getID())) {
 				AlertDialog d = new AlertDialog.Builder(getContext())
 						.setMessage("Start the game?")
 						.setPositiveButton("START", (dialog, which) -> {
@@ -200,6 +210,7 @@ public class GameFragment extends Fragment {
 	}
 
 	private void addIcon(LinearLayout ll, GameAsset icon, int size) {
+		// TODO: space between icons
 		ImageView iv = new ImageView(getContext());
 		iv.setMaxHeight(size);
 		iv.setAdjustViewBounds(true);
@@ -225,7 +236,7 @@ public class GameFragment extends Fragment {
 
 	public void updateAll() {
 		for(Player pl : MainActivity.getRoom().getPlayers()) {
-			addPlayer(pl, false);
+			addOrUpdatePlayer(pl);
 		}
 
 		gameBoardContainer.invalidate();

@@ -1,4 +1,4 @@
-package me.mrletsplay.secretreichstagandroid;
+package me.mrletsplay.secretreichstagandroid.ui;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;

@@ -2,16 +2,23 @@ package me.mrletsplay.secretreichstagandroid;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.PreferenceManager;
 
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,6 +29,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +41,8 @@ import me.mrletsplay.secretreichstagandroid.fragment.MainMenuFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.GameFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.RoomSettingsFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.SelectUsernameFragment;
+import me.mrletsplay.secretreichstagandroid.fragment.SettingsFragment;
+import me.mrletsplay.secretreichstagandroid.ui.MovableFloatingActionButton;
 import me.mrletsplay.srweb.game.GameMode;
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.game.Room;
@@ -53,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
 	private static Player leader;
 	private static boolean selfVoted;
 	private static JSONObject voteResults;
+	private static JSONObject previousRoles;
+	private static boolean gamePaused;
+
 
 	private String roomID;
 
@@ -76,9 +89,10 @@ public class MainActivity extends AppCompatActivity {
 			for(GameAsset a : GameAsset.values()) {
 				Thread t = new Thread(() -> {
 					try {
-						a.load();
-						if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { // To prevent toast stacking on older Android
-							runOnUiThread(() -> Toast.makeText(this, "Loading assets (" + i.incrementAndGet() + "/" + GameAsset.values().length + ")", Toast.LENGTH_SHORT).show());
+						boolean neededToDownload = a.load(getFilesDir());
+						i.incrementAndGet();
+						if(neededToDownload && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { // To prevent toast stacking on older Android
+							runOnUiThread(() -> Toast.makeText(this, "Downloading assets (" + i.get() + "/" + GameAsset.values().length + ")", Toast.LENGTH_SHORT).show());
 						}
 					}catch(Exception e) {
 						errorOccurred.set(true);
@@ -146,8 +160,11 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	public void joinRoom(View v) {
-		// loadFragment(new JoinRoomFragment());
+		loadFragment(new JoinRoomFragment());
+	}
 
+	public void settings(View v) {
+		loadFragment(new SettingsFragment());
 	}
 
 	public void roomSettingsConfirm(View v) {
@@ -211,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
 
 		new Thread(() -> {
 			try {
-				Networking.init(false);
+				Networking.init(true);
 
 				PacketClientConnect con = new PacketClientConnect();
 				con.setPlayerName(fr.getUsername());
@@ -241,9 +258,13 @@ public class MainActivity extends AppCompatActivity {
 					PacketServerRoomInfo roomInfo = (PacketServerRoomInfo) p.getData();
 					room = roomInfo.getRoom();
 					selfPlayer = roomInfo.getSelfPlayer();
+					selfVoted = roomInfo.isVoteDone(); // Relevant when rejoining
 					GameFragment gameFragment = new GameFragment();
 					loadFragment(gameFragment);
 					// TODO: Session ID
+
+					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+					prefs.edit().putString("last_session", roomInfo.getSessionID()).apply();
 
 					Networking.setPacketListener(new DefaultPacketListener());
 				});
@@ -356,12 +377,28 @@ public class MainActivity extends AppCompatActivity {
 		return voteResults;
 	}
 
+	public static void setPreviousRoles(JSONObject previousRoles) {
+		MainActivity.previousRoles = previousRoles;
+	}
+
+	public static JSONObject getPreviousRoles() {
+		return previousRoles;
+	}
+
+	public static void setGamePaused(boolean gamePaused) {
+		MainActivity.gamePaused = gamePaused;
+	}
+
+	public static boolean isGamePaused() {
+		return gamePaused;
+	}
+
 	@Override
 	public void onBackPressed() {
 		if(currentFragment instanceof GameFragment) {
 			// TODO: show confirmation alert?
 			return;
-		}
+		}else if(currentFragment instanceof MainMenuFragment) return;
 
 		super.onBackPressed();
 	}

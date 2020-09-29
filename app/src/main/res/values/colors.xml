@@ -37,4 +37,8 @@
     <color name="board_liberal_election_tracker_inactive">#FFFFFF</color>
 
     <color name="self">#008000</color>
+
+    <color name="reichstag">#df7258</color>
+
+    <color name="alert">#FF4500</color>
 </resources>

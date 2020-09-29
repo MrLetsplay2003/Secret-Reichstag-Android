@@ -1,4 +1,4 @@
-package me.mrletsplay.secretreichstagandroid;
+package me.mrletsplay.secretreichstagandroid.ui;
 
 import android.content.Context;
 import android.view.View;
@@ -10,6 +10,8 @@ import androidx.core.util.Consumer;
 
 import java.util.List;
 
+import me.mrletsplay.secretreichstagandroid.MainActivity;
+import me.mrletsplay.secretreichstagandroid.R;
 import me.mrletsplay.srweb.game.Player;
 
 public class ChancellorAdapter extends BaseAdapter {

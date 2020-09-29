@@ -1,4 +1,4 @@
-package me.mrletsplay.secretreichstagandroid;
+package me.mrletsplay.secretreichstagandroid.ui;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,11 +11,13 @@ import android.view.SurfaceView;
 
 import androidx.core.content.res.ResourcesCompat;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import me.mrletsplay.secretreichstagandroid.GameAsset;
+import me.mrletsplay.secretreichstagandroid.MainActivity;
+import me.mrletsplay.secretreichstagandroid.R;
 
 public class UIGameSurface extends SurfaceView implements SurfaceHolder.Callback {
 
