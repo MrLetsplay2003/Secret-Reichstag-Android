@@ -53,6 +53,20 @@
         android:textSize="18sp" />
 
     <Button
+        android:id="@+id/rejoin_room"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:enabled="true"
+        android:fontFamily="@font/germania_one_regular"
+        android:onClick="rejoinRoom"
+        android:text="@string/button_rejoin_room"
+        android:textSize="18sp" />
+
+    <Button
         android:id="@+id/settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -63,19 +77,6 @@
         android:fontFamily="@font/germania_one_regular"
         android:onClick="settings"
         android:text="@string/button_settings"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/confirm_room_settings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:enabled="false"
-        android:fontFamily="@font/germania_one_regular"
-        android:text="@string/button_rejoin_room"
         android:textSize="18sp" />
 
     <Space

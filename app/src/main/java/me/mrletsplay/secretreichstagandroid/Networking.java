@@ -48,6 +48,16 @@ public class Networking {
 			}
 
 			@Override
+			public void onConnectError(WebSocket websocket, WebSocketException exception) throws Exception {
+				exception.printStackTrace();
+			}
+
+			@Override
+			public void onUnexpectedError(WebSocket websocket, WebSocketException cause) throws Exception {
+				cause.printStackTrace();
+			}
+
+			@Override
 			public void onTextMessage(WebSocket websocket, String text) throws Exception {
 				try {
 					JSONObject obj = new JSONObject(text);

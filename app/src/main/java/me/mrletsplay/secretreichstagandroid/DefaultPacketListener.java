@@ -110,6 +110,7 @@ public class DefaultPacketListener implements PacketListener {
 				fr.addOrUpdatePlayer(l.getPlayer());
 			}
 		}else if(d instanceof PacketServerStartGame) {
+			System.out.println("START GAME");
 			MainActivity.getRoom().setGameRunning(true);
 
 			PacketServerStartGame s = (PacketServerStartGame) d;
@@ -347,6 +348,7 @@ public class DefaultPacketListener implements PacketListener {
 			if(currentSnackbar != null) currentSnackbar.dismiss();
 			MainActivity.setPreviousRoles(((PacketServerStopGame) d).getRoles());
 			// TODO: winner dialog
+
 		}else if(d instanceof PacketServerVeto) {
 			runOnUiThread(() -> {
 				LayoutInflater inf = fr.getLayoutInflater();
@@ -426,6 +428,8 @@ public class DefaultPacketListener implements PacketListener {
 					.setCancelable(false)
 					.create();
 
+			ActionDialog ad = showActionDialog(selectDialog, v2);
+
 			ListView lv = v2.findViewById(R.id.chancellor_players);
 
 			List<Player> players = new ArrayList<>();
@@ -435,7 +439,7 @@ public class DefaultPacketListener implements PacketListener {
 			}
 
 			lv.setAdapter(new ChancellorAdapter(MainActivity.getCurrentFragment().getContext(), players, player -> {
-				selectDialog.dismiss();
+				ad.dismiss();
 				callback.accept(player);
 			}));
 

@@ -2,6 +2,7 @@ package me.mrletsplay.secretreichstagandroid;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -25,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.util.SharedPreferencesUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONObject;
@@ -35,6 +37,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.prefs.Preferences;
 
 import me.mrletsplay.secretreichstagandroid.fragment.JoinRoomFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.MainMenuFragment;
@@ -76,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		setContentView(R.layout.container);
@@ -91,9 +96,9 @@ public class MainActivity extends AppCompatActivity {
 					try {
 						boolean neededToDownload = a.load(getFilesDir());
 						i.incrementAndGet();
-						if(neededToDownload && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) { // To prevent toast stacking on older Android
+						/*if(neededToDownload && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // To prevent toast stacking on older Android
 							runOnUiThread(() -> Toast.makeText(this, "Downloading assets (" + i.get() + "/" + GameAsset.values().length + ")", Toast.LENGTH_SHORT).show());
-						}
+						}*/
 					}catch(Exception e) {
 						errorOccurred.set(true);
 						e.printStackTrace();
@@ -163,6 +168,20 @@ public class MainActivity extends AppCompatActivity {
 		loadFragment(new JoinRoomFragment());
 	}
 
+	public void rejoinRoom(View v) {
+		SharedPreferences p = PreferenceManager.getDefaultSharedPreferences(this);
+		String lastSession = p.getString("last_session", null);
+		if(lastSession == null) {
+			Toast.makeText(this, "No previous session available", Toast.LENGTH_SHORT).show();
+			return;
+		}
+
+		PacketClientConnect con = new PacketClientConnect();
+		con.setCreateRoom(false);
+		con.setSessionID(lastSession);
+		joinServer(con);
+	}
+
 	public void settings(View v) {
 		loadFragment(new SettingsFragment());
 	}
@@ -226,22 +245,26 @@ public class MainActivity extends AppCompatActivity {
 			return;
 		}
 
+		PacketClientConnect con = new PacketClientConnect();
+		con.setPlayerName(fr.getUsername());
+		if(roomSettings != null) {
+			con.setCreateRoom(true);
+			con.setRoomName(roomName);
+			con.setRoomSettings(roomSettings);
+		}else {
+			con.setCreateRoom(false);
+			con.setRoomID(roomID);
+		}
+
+		joinServer(con);
+	}
+
+	private void joinServer(PacketClientConnect connectPacket) {
 		new Thread(() -> {
 			try {
-				Networking.init(true);
+				Networking.init(false);
 
-				PacketClientConnect con = new PacketClientConnect();
-				con.setPlayerName(fr.getUsername());
-				if(roomSettings != null) {
-					con.setCreateRoom(true);
-					con.setRoomName(roomName);
-					con.setRoomSettings(roomSettings);
-				}else {
-					con.setCreateRoom(false);
-					con.setRoomID(roomID);
-				}
-
-				Packet packet = Packet.of(con);
+				Packet packet = Packet.of(connectPacket);
 				Networking.sendPacket(packet).thenAccept(p -> {
 					if(p.getData() instanceof PacketServerJoinError) {
 						PacketServerJoinError joinError = (PacketServerJoinError) p.getData();
@@ -262,10 +285,8 @@ public class MainActivity extends AppCompatActivity {
 					GameFragment gameFragment = new GameFragment();
 					loadFragment(gameFragment);
 					// TODO: Session ID
-
 					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 					prefs.edit().putString("last_session", roomInfo.getSessionID()).apply();
-
 					Networking.setPacketListener(new DefaultPacketListener());
 				});
 			} catch (Exception e) {

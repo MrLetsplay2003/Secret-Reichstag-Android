@@ -48,6 +48,7 @@ public class GameFragment extends Fragment {
 	private Map<String, LinearLayout> playerElements = new HashMap<>();
 	private AlertDialog startGameAlert;
 	private UIGameSurface gameSurface;
+	private boolean loadFinished;
 
 	@Override
 	public void onAttach(@NonNull Context context) {
@@ -85,7 +86,15 @@ public class GameFragment extends Fragment {
 		return v;
 	}
 
+	@Override
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+		super.onViewCreated(view, savedInstanceState);
+		loadFinished = true;
+		updateAll();
+	}
+
 	public void addOrUpdatePlayer(Player player) {
+		if(!loadFinished) return;
 		playerList.post(() -> {
 			LinearLayout ll = playerElements.get(player.getID());
 			if(ll == null) {
@@ -175,7 +184,7 @@ public class GameFragment extends Fragment {
 				}
 			}
 
-			// TODO: was role
+			// TODO: test was role
 
 			if(MainActivity.getPreviousRoles() != null && MainActivity.getPreviousRoles().has(player.getID())) {
 				try {
@@ -235,13 +244,17 @@ public class GameFragment extends Fragment {
 	}
 
 	public void updateAll() {
-		for(Player pl : MainActivity.getRoom().getPlayers()) {
-			addOrUpdatePlayer(pl);
-		}
+		if(!loadFinished) return;
+		System.out.println("UPDATE ALL");
+		new Handler(Looper.getMainLooper()).post(() -> {
+			for(Player pl : MainActivity.getRoom().getPlayers()) {
+				addOrUpdatePlayer(pl);
+			}
 
-		gameBoardContainer.invalidate();
-		for(UIGameBoard b : gameBoards) b.invalidate();
-		gameSurface.invalidate();
+			gameBoardContainer.invalidate();
+			for(UIGameBoard b : gameBoards) b.invalidate();
+			gameSurface.invalidate();
+		});
 	}
 
 }
