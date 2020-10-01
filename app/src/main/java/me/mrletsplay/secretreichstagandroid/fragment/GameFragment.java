@@ -32,7 +32,7 @@ import me.mrletsplay.secretreichstagandroid.Networking;
 import me.mrletsplay.secretreichstagandroid.SerializationUtils;
 import me.mrletsplay.secretreichstagandroid.ui.UIGameBoard;
 import me.mrletsplay.secretreichstagandroid.R;
-import me.mrletsplay.secretreichstagandroid.ui.UIGameSurface;
+import me.mrletsplay.secretreichstagandroid.ui.UICardStack;
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.game.state.GameParty;
 import me.mrletsplay.srweb.game.state.GameRole;
@@ -47,7 +47,8 @@ public class GameFragment extends Fragment {
 	private List<UIGameBoard> gameBoards = new ArrayList<>();
 	private Map<String, LinearLayout> playerElements = new HashMap<>();
 	private AlertDialog startGameAlert;
-	private UIGameSurface gameSurface;
+	private UICardStack gameSurface;
+	private TextView roleText;
 	private boolean loadFinished;
 
 	@Override
@@ -77,7 +78,8 @@ public class GameFragment extends Fragment {
 		}
 
 		playerList = v.findViewById(R.id.player_list);
-		gameSurface = v.findViewById(R.id.game_surface);
+		gameSurface = v.findViewById(R.id.card_stack);
+		roleText = v.findViewById(R.id.role_text);
 
 		addOrUpdatePlayer(MainActivity.getSelfPlayer());
 		for(Player pl : MainActivity.getRoom().getPlayers()) {
@@ -117,6 +119,9 @@ public class GameFragment extends Fragment {
 				GameRole r = MainActivity.getSelfRole();
 				if (MainActivity.isTeammate(player)) {
 					int col = getColor("teammate_" + r.getParty().name().toLowerCase());
+					tv.setTextColor(col);
+				}else if(MainActivity.getLeader().getID().equals(player.getID())) {
+					int col = getColor("leader_" + r.getParty().name().toLowerCase());
 					tv.setTextColor(col);
 				}
 			}else {
@@ -254,6 +259,13 @@ public class GameFragment extends Fragment {
 			gameBoardContainer.invalidate();
 			for(UIGameBoard b : gameBoards) b.invalidate();
 			gameSurface.invalidate();
+
+			if(MainActivity.getSelfRole() != null) {
+				roleText.setTextColor(getColor("role_" + MainActivity.getSelfRole().name().toLowerCase()));
+			}else {
+				roleText.setTextColor(Color.BLACK);
+				roleText.setText("-");
+			}
 		});
 	}
 

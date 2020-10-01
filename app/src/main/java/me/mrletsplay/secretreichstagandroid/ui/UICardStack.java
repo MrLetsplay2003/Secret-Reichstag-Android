@@ -8,6 +8,8 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.core.content.res.ResourcesCompat;
 
@@ -19,9 +21,9 @@ import me.mrletsplay.secretreichstagandroid.GameAsset;
 import me.mrletsplay.secretreichstagandroid.MainActivity;
 import me.mrletsplay.secretreichstagandroid.R;
 
-public class UIGameSurface extends SurfaceView implements SurfaceHolder.Callback {
+public class UICardStack extends SurfaceView implements SurfaceHolder.Callback {
 
-	public UIGameSurface(Context context, AttributeSet attrs) {
+	public UICardStack(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
 		setFocusable(true);
@@ -36,6 +38,11 @@ public class UIGameSurface extends SurfaceView implements SurfaceHolder.Callback
 	@Override
 	public void surfaceCreated(SurfaceHolder holder) {
 		setWillNotDraw(false);
+
+		ViewGroup.LayoutParams p = getLayoutParams();
+		p.width = (int) (getHeight() / 1.45);
+		p.height = getHeight();
+		setLayoutParams(p);
 	}
 
 	@Override
@@ -54,12 +61,12 @@ public class UIGameSurface extends SurfaceView implements SurfaceHolder.Callback
 
 		Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
 		p.setStyle(Paint.Style.FILL);
-		p.setColor(Color.WHITE);
+		p.setColor(Color.RED);
 
 		canvas.drawPaint(p);
 
 		if(GameAsset.COMMUNIST_ARTICLE.getBitmap() != null) {
-			DrawUtils.drawBitmapAutoW(canvas, GameAsset.ARTICLE_BACK.getBitmap(), 10, 10, getHeight());
+			DrawUtils.drawBitmapAutoW(canvas, GameAsset.ARTICLE_BACK.getBitmap(), 0, 0, getHeight());
 		}
 
 		p.setColor(Color.WHITE);
@@ -68,9 +75,9 @@ public class UIGameSurface extends SurfaceView implements SurfaceHolder.Callback
 		p.setTypeface(tf);
 		p.setTextSize(100f);
 
-		DrawUtils.drawLinesCentered(canvas, p, (int) (getHeight() / 1.45 / 2) + 10, getHeight() * 3 / 4, String.valueOf(MainActivity.getRoom().getGameState().getDrawPileSize()));
+		DrawUtils.drawLinesCentered(canvas, p, (int) (getHeight() / 1.45 / 2), getHeight() * 3 / 4 - 10, String.valueOf(MainActivity.getRoom().getGameState().getDrawPileSize()));
 
-		p.setColor(Color.BLACK);
+		/*p.setColor(Color.BLACK);
 
 		String roomID = MainActivity.getRoom().getID();
 
@@ -78,6 +85,6 @@ public class UIGameSurface extends SurfaceView implements SurfaceHolder.Callback
 		if(MainActivity.getSelfRole() != null) {
 			lines.add("Your role: " + MainActivity.getSelfRole().name());
 		}
-		DrawUtils.drawLinesCentered(canvas, p, getWidth() / 2, getHeight() / 2, lines.toArray(new String[lines.size()]));
+		DrawUtils.drawLinesCentered(canvas, p, getWidth() / 2, getHeight() / 2, lines.toArray(new String[lines.size()]));*/
 	}
 }

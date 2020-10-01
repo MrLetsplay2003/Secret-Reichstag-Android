@@ -78,6 +78,8 @@ public enum GameAsset {
 					this.bitmap = BitmapFactory.decodeStream(fIn);
 				}
 
+				bitmap.setHasAlpha(true);
+
 				return false;
 			}else {
 				try(InputStream in = new URL(getURL()).openStream()) {
@@ -85,7 +87,7 @@ public enum GameAsset {
 				}
 
 				try(FileOutputStream fOut = new FileOutputStream(cachedFile)) {
-					bitmap.compress(Bitmap.CompressFormat.WEBP, 100, fOut);
+					bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
 				}
 
 				return true;

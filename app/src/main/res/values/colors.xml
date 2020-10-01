@@ -14,7 +14,9 @@
 
     <color name="role_liberal">#004e6e</color>
     <color name="role_communist">#8b0000</color>
+    <color name="role_stalin">#660000</color>
     <color name="role_fascist">#a35c2f</color>
+    <color name="role_hitler">#693b1e</color>
 
     <color name="board_background">#363835</color>
     <color name="board_info_text">#ffa200</color>
