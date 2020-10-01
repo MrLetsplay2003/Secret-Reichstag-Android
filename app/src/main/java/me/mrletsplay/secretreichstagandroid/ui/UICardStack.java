@@ -61,7 +61,7 @@ public class UICardStack extends SurfaceView implements SurfaceHolder.Callback {
 
 		Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
 		p.setStyle(Paint.Style.FILL);
-		p.setColor(Color.RED);
+		p.setColor(Color.WHITE);
 
 		canvas.drawPaint(p);
 
@@ -76,15 +76,5 @@ public class UICardStack extends SurfaceView implements SurfaceHolder.Callback {
 		p.setTextSize(100f);
 
 		DrawUtils.drawLinesCentered(canvas, p, (int) (getHeight() / 1.45 / 2), getHeight() * 3 / 4 - 10, String.valueOf(MainActivity.getRoom().getGameState().getDrawPileSize()));
-
-		/*p.setColor(Color.BLACK);
-
-		String roomID = MainActivity.getRoom().getID();
-
-		List<String> lines = new ArrayList<>(Collections.singletonList("Room ID: " + roomID));
-		if(MainActivity.getSelfRole() != null) {
-			lines.add("Your role: " + MainActivity.getSelfRole().name());
-		}
-		DrawUtils.drawLinesCentered(canvas, p, getWidth() / 2, getHeight() / 2, lines.toArray(new String[lines.size()]));*/
 	}
 }
