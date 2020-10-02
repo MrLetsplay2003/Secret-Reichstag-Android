@@ -2,6 +2,7 @@ package me.mrletsplay.secretreichstagandroid;
 
 import android.content.res.ColorStateList;
 import android.drm.DrmStore;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -79,10 +80,11 @@ public class DefaultPacketListener implements PacketListener {
 		if(d instanceof PacketServerPlayerJoined) {
 			PacketServerPlayerJoined j = (PacketServerPlayerJoined) d;
 			if(!j.isRejoin()) {
-				for(Player pl : MainActivity.getRoom().getPlayers()) {
-					if(pl.getID().equals(j.getPlayer().getID())) pl.setOnline(true); // TODO: fix: online doesn't update
-				}
 				MainActivity.getRoom().getPlayers().add(j.getPlayer());
+			}else {
+				for(Player pl : MainActivity.getRoom().getPlayers()) {
+					if(pl.getID().equals(j.getPlayer().getID())) pl.setOnline(true); // TODO: test fix: online doesn't update
+				}
 			}
 			fr.addOrUpdatePlayer(j.getPlayer());
 			fr.showStartDialogIfNeeded();
@@ -117,6 +119,8 @@ public class DefaultPacketListener implements PacketListener {
 			MainActivity.setLeader(s.getLeader());
 			MainActivity.setSelfRole(s.getRole());
 			MainActivity.setTeammates(s.getTeammates());
+			MainActivity.setPreviousRoles(null);
+			MainActivity.setSelfVoted(false);
 
 			fr.updateAll();
 		}else if(d instanceof PacketServerUpdateGameState) {
@@ -147,6 +151,7 @@ public class DefaultPacketListener implements PacketListener {
 					voteYes.setOnClickListener(view -> {
 						dl.dismiss();
 						currentActionDialog = null;
+						MainActivity.setSelfVoted(true);
 						PacketClientVote vote = new PacketClientVote();
 						vote.setYes(true);
 						Networking.sendPacket(Packet.of(vote));
@@ -156,6 +161,7 @@ public class DefaultPacketListener implements PacketListener {
 					voteNo.setOnClickListener(view -> {
 						dl.dismiss();
 						currentAlert = null;
+						MainActivity.setSelfVoted(true);
 						PacketClientVote vote = new PacketClientVote();
 						vote.setYes(false);
 						Networking.sendPacket(Packet.of(vote));
@@ -168,7 +174,8 @@ public class DefaultPacketListener implements PacketListener {
 						!MainActivity.isPlayerDead(pl)
 						&& (newState.getPreviousPresident() == null || !newState.getPreviousPresident().getID().equals(pl.getID()))
 						&& (newState.getPreviousChancellor() == null || !newState.getPreviousChancellor().getID().equals(pl.getID()))
-						&& !pl.getID().equals(MainActivity.getSelfPlayer().getID()),
+						&& !pl.getID().equals(MainActivity.getSelfPlayer().getID())
+						&& !(newState.getBlockedPlayer() != null && newState.getBlockedPlayer().getID().equals(pl.getID())),
 						player -> {
 							PacketClientSelectChancellor ch = new PacketClientSelectChancellor();
 							ch.setPlayerID(player.getID());
@@ -218,7 +225,9 @@ public class DefaultPacketListener implements PacketListener {
 			MainActivity.setVoteResults(vr.getVotes());
 			fr.updateAll();
 
+			if(currentSnackbar != null) currentSnackbar.dismiss();
 			currentSnackbar = Snackbar.make(fr.getView().findViewById(R.id.player_list_container), "Vote results are shown", Snackbar.LENGTH_INDEFINITE)
+				.setBackgroundTint(Color.argb(128, 64, 64, 64))
 				.setAction("Dismiss", v -> {
 					currentSnackbar = null;
 					MainActivity.setVoteResults(null);
@@ -282,7 +291,7 @@ public class DefaultPacketListener implements PacketListener {
 					});
 					break;
 				}
-				case INSPECT_PLAYER: // TODO: test
+				case INSPECT_PLAYER: // TODO: test INSPECT_PLAYER action
 				{
 					showPickPlayerDialog("Select the player you want to inspect", pl ->
 							!MainActivity.getSelfPlayer().getID().equals(pl.getID())
@@ -347,8 +356,28 @@ public class DefaultPacketListener implements PacketListener {
 			if(currentAlert != null) currentAlert.dismiss();
 			if(currentSnackbar != null) currentSnackbar.dismiss();
 			MainActivity.setPreviousRoles(((PacketServerStopGame) d).getRoles());
-			// TODO: winner dialog
+			// TODO: test winner dialog
+			runOnUiThread(() -> {
+				LayoutInflater inf = fr.getLayoutInflater();
+				View v = inf.inflate(R.layout.winner, null);
+				AlertDialog winnerDialog = new AlertDialog.Builder(fr.getContext())
+						.setView(v)
+						.setCancelable(false)
+						.create();
 
+				TextView w = v.findViewById(R.id.winner_party);
+				w.setText(((PacketServerStopGame) d).getWinner().getFriendlyName());
+
+				Button winnerOkay = v.findViewById(R.id.winner_okay);
+				winnerOkay.setOnClickListener(view -> {
+					winnerDialog.dismiss();
+					currentAlert = null;
+					fr.showStartDialogIfNeeded();
+				});
+
+				currentAlert = winnerDialog;
+				winnerDialog.show();
+			});
 		}else if(d instanceof PacketServerVeto) {
 			runOnUiThread(() -> {
 				LayoutInflater inf = fr.getLayoutInflater();
@@ -522,6 +551,13 @@ public class DefaultPacketListener implements PacketListener {
 
 			if(!MainActivity.isGamePaused()) pickDialog.show();
 		});
+	}
+
+	public void quit() {
+		if(currentSnackbar != null) currentSnackbar.dismiss();
+		if(currentAlert != null) currentAlert.dismiss();
+		if(currentActionDialog != null) currentActionDialog.dismiss();
+		// TODO: test quit
 	}
 
 	private void runOnUiThread(Runnable run) {

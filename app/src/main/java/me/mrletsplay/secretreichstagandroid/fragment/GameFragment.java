@@ -6,11 +6,13 @@ import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -67,15 +69,15 @@ public class GameFragment extends Fragment {
 		gameBoards.add(lib);
 		gameBoardContainer.addView(lib);
 
-		UIGameBoard fasc = new UIGameBoard(getContext(), GameParty.FASCIST);
-		gameBoards.add(fasc);
-		gameBoardContainer.addView(fasc);
-
 		if(MainActivity.getRoom().getGameState().getCommunistBoard() != null) {
 			UIGameBoard comm = new UIGameBoard(getContext(), GameParty.COMMUNIST);
 			gameBoards.add(comm);
 			gameBoardContainer.addView(comm);
 		}
+
+		UIGameBoard fasc = new UIGameBoard(getContext(), GameParty.FASCIST);
+		gameBoards.add(fasc);
+		gameBoardContainer.addView(fasc);
 
 		playerList = v.findViewById(R.id.player_list);
 		gameSurface = v.findViewById(R.id.card_stack);
@@ -120,7 +122,7 @@ public class GameFragment extends Fragment {
 				if (MainActivity.isTeammate(player)) {
 					int col = getColor("teammate_" + r.getParty().name().toLowerCase());
 					tv.setTextColor(col);
-				}else if(MainActivity.getLeader().getID().equals(player.getID())) {
+				}else if(MainActivity.getLeader() != null && MainActivity.getLeader().getID().equals(player.getID())) {
 					int col = getColor("leader_" + r.getParty().name().toLowerCase());
 					tv.setTextColor(col);
 				}
@@ -148,6 +150,7 @@ public class GameFragment extends Fragment {
 			Paint.FontMetrics fm = tv.getPaint().getFontMetrics();
 			int s = (int) (fm.descent - fm.ascent);
 			tv.setMaxHeight(s + 10);
+			tv.setGravity(Gravity.CENTER_VERTICAL);
 
 			// Icons
 			while(ll.getChildCount() > 1) ll.removeViewAt(1);
@@ -189,8 +192,6 @@ public class GameFragment extends Fragment {
 				}
 			}
 
-			// TODO: test was role
-
 			if(MainActivity.getPreviousRoles() != null && MainActivity.getPreviousRoles().has(player.getID())) {
 				try {
 					GameRole role = SerializationUtils.cast(MainActivity.getPreviousRoles().getJSONObject(player.getID()));
@@ -205,9 +206,9 @@ public class GameFragment extends Fragment {
 	}
 
 	public void showStartDialogIfNeeded() {
+		// TODO: sicc
 		new Handler(Looper.getMainLooper()).post(() -> {
-			if(!MainActivity.getRoom().isGameRunning()
-					&& MainActivity.getRoom().getPlayers().size() == MainActivity.getRoom().getSettings().getPlayerCount()
+			if(MainActivity.getRoom().getPlayers().size() == MainActivity.getRoom().getSettings().getPlayerCount()
 					&& MainActivity.getSelfPlayer().getID().equals(MainActivity.getRoom().getPlayers().get(0).getID())) {
 				AlertDialog d = new AlertDialog.Builder(getContext())
 						.setMessage("Start the game?")
@@ -224,9 +225,15 @@ public class GameFragment extends Fragment {
 	}
 
 	private void addIcon(LinearLayout ll, GameAsset icon, int size) {
-		// TODO: space between icons
+		Space sp = new Space(getContext());
+		sp.setLayoutParams(new LinearLayout.LayoutParams(10, ViewGroup.LayoutParams.MATCH_PARENT));
+		ll.addView(sp);
+
 		ImageView iv = new ImageView(getContext());
 		iv.setMaxHeight(size);
+		LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+		llp.gravity = Gravity.CENTER_VERTICAL;
+		iv.setLayoutParams(llp);
 		iv.setAdjustViewBounds(true);
 		iv.setImageBitmap(icon.getBitmap());
 		ll.addView(iv);
@@ -262,11 +269,16 @@ public class GameFragment extends Fragment {
 
 			if(MainActivity.getSelfRole() != null) {
 				roleText.setTextColor(getColor("role_" + MainActivity.getSelfRole().name().toLowerCase()));
+				roleText.setText(MainActivity.getSelfRole().name());
 			}else {
 				roleText.setTextColor(Color.BLACK);
 				roleText.setText("-");
 			}
 		});
+	}
+
+	public void quit() {
+
 	}
 
 }

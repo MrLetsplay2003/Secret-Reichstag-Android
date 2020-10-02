@@ -23,7 +23,8 @@ public class ActionDialog {
 	}
 
 	public void dismiss() {
-		((ViewGroup) actionButton.getParent()).removeView(actionButton);
+		ViewGroup parent = ((ViewGroup) actionButton.getParent());
+		if(parent != null) parent.removeView(actionButton);
 		dialog.dismiss();
 	}
 

@@ -95,6 +95,16 @@ public class Networking {
 		webSocket.connect();
 	}
 
+	public static void stop() {
+		if(webSocket != null) {
+			webSocket.disconnect();
+			webSocket = null;
+			listener = null;
+			packetQueue.clear();
+			((DefaultPacketListener) listener).quit();
+		}
+	}
+
 	public static CompletableFuture<Packet> sendPacket(Packet packet) {
 		CompletableFuture<Packet> pF = new CompletableFuture<>();
 		packetQueue.put(packet, pF);

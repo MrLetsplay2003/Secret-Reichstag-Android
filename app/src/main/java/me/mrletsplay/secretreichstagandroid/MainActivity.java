@@ -58,6 +58,10 @@ import me.mrletsplay.srweb.packet.impl.PacketServerRoomInfo;
 
 public class MainActivity extends AppCompatActivity {
 
+	// TODO: quit game
+	// TODO: duplicate votes on rejoin
+	// TODO: custom drawing display size
+
 	private static Room room;
 	private static Player selfPlayer;
 	private static Fragment currentFragment;
@@ -186,6 +190,16 @@ public class MainActivity extends AppCompatActivity {
 		loadFragment(new SettingsFragment());
 	}
 
+	public void menu(View v) {
+		AlertDialog ad = new AlertDialog.Builder(this)
+				.setTitle("Menu (DEBUG)")
+				.setMessage("Room ID: " + room.getID())
+				.create();
+
+		ad.show();
+		// TODO: proper menu
+	}
+
 	public void roomSettingsConfirm(View v) {
 		RoomSettingsFragment fr = (RoomSettingsFragment) currentFragment;
 
@@ -284,7 +298,6 @@ public class MainActivity extends AppCompatActivity {
 					selfVoted = roomInfo.isVoteDone(); // Relevant when rejoining
 					GameFragment gameFragment = new GameFragment();
 					loadFragment(gameFragment);
-					// TODO: Session ID
 					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 					prefs.edit().putString("last_session", roomInfo.getSessionID()).apply();
 					Networking.setPacketListener(new DefaultPacketListener());
@@ -418,6 +431,17 @@ public class MainActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		if(currentFragment instanceof GameFragment) {
 			// TODO: show confirmation alert?
+			new AlertDialog.Builder(this)
+					.setTitle("Quit")
+					.setMessage("Do you really want to quit?")
+					.setPositiveButton("Yes", (dialog, which) -> {
+						dialog.dismiss();
+						Networking.stop();
+						((GameFragment) currentFragment).quit();
+						loadFragment(new MainMenuFragment());
+					})
+					.setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+					.show();
 			return;
 		}else if(currentFragment instanceof MainMenuFragment) return;
 

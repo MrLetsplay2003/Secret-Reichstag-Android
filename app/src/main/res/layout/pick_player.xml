@@ -26,7 +26,7 @@
     <ListView
         android:id="@+id/chancellor_players"
         android:layout_width="match_parent"
-        android:layout_height="400dp">
+        android:layout_height="300dp">
 
     </ListView>
 

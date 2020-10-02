@@ -75,6 +75,6 @@ public class UICardStack extends SurfaceView implements SurfaceHolder.Callback {
 		p.setTypeface(tf);
 		p.setTextSize(100f);
 
-		DrawUtils.drawLinesCentered(canvas, p, (int) (getHeight() / 1.45 / 2), getHeight() * 3 / 4 - 10, String.valueOf(MainActivity.getRoom().getGameState().getDrawPileSize()));
+		DrawUtils.drawLinesCentered(canvas, p, getWidth() / 2, getHeight() * 3 / 4 - 10, String.valueOf(MainActivity.getRoom().getGameState().getDrawPileSize()));
 	}
 }
