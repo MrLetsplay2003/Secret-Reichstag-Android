@@ -12,3 +12,7 @@
 /captures
 .externalNativeBuild
 .cxx
+/.floo
+/.flooignore
+/app/release/app-release.apk
+/app/release/output-metadata.json
