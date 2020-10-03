@@ -6,12 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/reichstag"
+    android:gravity="center_vertical"
     android:orientation="vertical">
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -23,7 +19,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="100dp"
         android:layout_weight="0" />
 
     <Button
@@ -31,57 +27,60 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
         android:onClick="newRoom"
         android:text="@string/button_new_room"
         android:textSize="18sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
 
     <Button
         android:id="@+id/join_room"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
         android:onClick="joinRoom"
         android:text="@string/button_join_room"
         android:textSize="18sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
 
     <Button
         android:id="@+id/rejoin_room"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_shape"
         android:enabled="true"
         android:fontFamily="@font/germania_one_regular"
         android:onClick="rejoinRoom"
         android:text="@string/button_rejoin_room"
         android:textSize="18sp" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
+
     <Button
         android:id="@+id/settings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
         android:onClick="settings"
         android:text="@string/button_settings"
         android:textSize="18sp" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
 
 </LinearLayout>

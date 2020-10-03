@@ -22,7 +22,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 	@Override
 	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		//getListView().setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.reichstag, null));
-		getListView().setBackgroundColor(Color.WHITE);
+		getListView().setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.reichstag, null));
+		//getListView().setBackgroundColor(Color.WHITE);
+		//getPreferenceScreen().getContext().setTheme(R.style.SettingsTheme);
 	}
+
 }

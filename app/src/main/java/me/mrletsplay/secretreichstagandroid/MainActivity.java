@@ -58,9 +58,9 @@ import me.mrletsplay.srweb.packet.impl.PacketServerRoomInfo;
 
 public class MainActivity extends AppCompatActivity {
 
-	// TODO: quit game
-	// TODO: duplicate votes on rejoin
-	// TODO: custom drawing display size
+	// TODO: test quit game
+	// TODO: test no duplicate votes on rejoin
+	// TODO: test custom drawing display size
 
 	private static Room room;
 	private static Player selfPlayer;
@@ -91,6 +91,30 @@ public class MainActivity extends AppCompatActivity {
 
 		loadFragment(new MainMenuFragment());
 
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+		if(!prefs.contains("cache_assets")) {
+			new AlertDialog.Builder(this)
+					.setTitle("Cache")
+					.setMessage("Cache assets?")
+					.setPositiveButton("Yes", (dialog, which) -> {
+						prefs.edit().putBoolean("cache_assets", true).apply();
+						loadAssets();
+					})
+					.setNegativeButton("No", (dialog, which) -> {
+						prefs.edit().putBoolean("cache_assets", false).apply();
+						loadAssets();
+					})
+					.setCancelable(false)
+					.show();
+		}else {
+			loadAssets();
+		}
+
+		getSupportFragmentManager().addOnBackStackChangedListener(() -> currentFragment = getSupportFragmentManager().findFragmentById(R.id.root_container));
+	}
+
+	private void loadAssets() {
 		new Thread(() -> {
 			List<Thread> ts = new ArrayList<>();
 			AtomicInteger i = new AtomicInteger(0);
@@ -125,13 +149,6 @@ public class MainActivity extends AppCompatActivity {
 				runOnUiThread(() -> Snackbar.make(findViewById(R.id.root_container), "Assets loaded!", Snackbar.LENGTH_SHORT).show());
 			}
 		}).start();
-
-		getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-			@Override
-			public void onBackStackChanged() {
-				currentFragment = getSupportFragmentManager().findFragmentById(R.id.root_container);
-			}
-		});
 	}
 
 	@Override
@@ -208,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
 			return;
 		}
 
-		if(fr.getMaxPlayers() < 3 /* TODO */ || fr.getMaxPlayers() > 14) {
+		if(fr.getMaxPlayers() < 5 || fr.getMaxPlayers() > 14) {
 			Snackbar.make(findViewById(R.id.root_container), "You need to enter a number of players between 5 and 14", Snackbar.LENGTH_LONG).show();
 			return;
 		}

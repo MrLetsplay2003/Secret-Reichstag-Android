@@ -98,10 +98,10 @@ public class Networking {
 	public static void stop() {
 		if(webSocket != null) {
 			webSocket.disconnect();
+			((DefaultPacketListener) listener).quit();
 			webSocket = null;
 			listener = null;
 			packetQueue.clear();
-			((DefaultPacketListener) listener).quit();
 		}
 	}
 

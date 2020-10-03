@@ -35,7 +35,7 @@ public class RoomSettingsFragment extends Fragment {
 
 		Spinner gameMode = v.findViewById(R.id.game_mode);
 		GameMode[] gameModes = {GameMode.SECRET_HITLER, GameMode.SECRET_REICHSTAG};
-		gameMode.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, Arrays.asList("Secret Hitler", "Secret Reichstag")));
+		gameMode.setAdapter(new ArrayAdapter<>(getContext(), R.layout.spinner_item, Arrays.asList("Secret Hitler", "Secret Reichstag")));
 		gameMode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

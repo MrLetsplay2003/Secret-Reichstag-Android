@@ -104,7 +104,7 @@ public class GameFragment extends Fragment {
 			if(ll == null) {
 				ll = new LinearLayout(getContext());
 				ll.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-				ll.setBackgroundColor(Color.DKGRAY);
+				ll.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.player_background, null));
 				ll.setLayoutMode(LinearLayout.HORIZONTAL);
 				TextView n = new TextView(getContext());
 				ll.addView(n);
@@ -206,7 +206,7 @@ public class GameFragment extends Fragment {
 	}
 
 	public void showStartDialogIfNeeded() {
-		// TODO: sicc
+		// TODO: test start dialog after round ends
 		new Handler(Looper.getMainLooper()).post(() -> {
 			if(MainActivity.getRoom().getPlayers().size() == MainActivity.getRoom().getSettings().getPlayerCount()
 					&& MainActivity.getSelfPlayer().getID().equals(MainActivity.getRoom().getPlayers().get(0).getID())) {
@@ -272,7 +272,7 @@ public class GameFragment extends Fragment {
 				roleText.setText(MainActivity.getSelfRole().name());
 			}else {
 				roleText.setTextColor(Color.BLACK);
-				roleText.setText("-");
+				roleText.setText("");
 			}
 		});
 	}

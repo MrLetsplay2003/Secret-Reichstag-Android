@@ -33,6 +33,7 @@ tools:context=".MainActivity">
             android:fontFamily="@font/germania_one_regular"
             android:gravity="center_horizontal"
             android:text="ROLE"
+            android:textColor="@color/text"
             android:textSize="18sp" />
 
         <Button
@@ -52,7 +53,7 @@ tools:context=".MainActivity">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#FFFFFF">
+            android:background="@color/player_list_background">
 
             <LinearLayout
                 android:id="@+id/player_list"

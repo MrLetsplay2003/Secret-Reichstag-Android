@@ -1,7 +1,11 @@
 package me.mrletsplay.secretreichstagandroid;
 
+import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import androidx.preference.PreferenceManager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -86,8 +90,11 @@ public enum GameAsset {
 					this.bitmap = BitmapFactory.decodeStream(in);
 				}
 
-				try(FileOutputStream fOut = new FileOutputStream(cachedFile)) {
-					bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.getCurrentFragment().getContext());
+				if(prefs.getBoolean("cache_assets", true)) {
+					try (FileOutputStream fOut = new FileOutputStream(cachedFile)) {
+						bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+					}
 				}
 
 				return true;

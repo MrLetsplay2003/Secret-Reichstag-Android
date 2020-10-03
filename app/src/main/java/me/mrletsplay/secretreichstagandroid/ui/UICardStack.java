@@ -1,6 +1,7 @@
 package me.mrletsplay.secretreichstagandroid.ui;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -73,7 +74,7 @@ public class UICardStack extends SurfaceView implements SurfaceHolder.Callback {
 
 		Typeface tf = ResourcesCompat.getFont(getContext(), R.font.germania_one_regular);
 		p.setTypeface(tf);
-		p.setTextSize(100f);
+		p.setTextSize(30f * Resources.getSystem().getDisplayMetrics().density);
 
 		DrawUtils.drawLinesCentered(canvas, p, getWidth() / 2, getHeight() * 3 / 4 - 10, String.valueOf(MainActivity.getRoom().getGameState().getDrawPileSize()));
 	}

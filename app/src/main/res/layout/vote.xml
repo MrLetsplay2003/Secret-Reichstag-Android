@@ -82,6 +82,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
+            android:background="@drawable/round_shape"
             android:fontFamily="@font/germania_one_regular"
             android:text="@string/vote_yes"
             android:textSize="18sp" />
@@ -93,6 +94,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
+            android:background="@drawable/round_shape"
             android:fontFamily="@font/germania_one_regular"
             android:text="@string/vote_no"
             android:textSize="18sp" />
@@ -110,6 +112,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="0"
+        android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
         android:text="Hide"
         android:textSize="18sp" />
