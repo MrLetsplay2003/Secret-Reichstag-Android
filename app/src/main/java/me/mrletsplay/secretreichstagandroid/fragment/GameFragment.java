@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -52,6 +53,7 @@ public class GameFragment extends Fragment {
 	private UICardStack gameSurface;
 	private TextView roleText;
 	private boolean loadFinished;
+	private FrameLayout loaderContainer;
 
 	@Override
 	public void onAttach(@NonNull Context context) {
@@ -82,11 +84,13 @@ public class GameFragment extends Fragment {
 		playerList = v.findViewById(R.id.player_list);
 		gameSurface = v.findViewById(R.id.card_stack);
 		roleText = v.findViewById(R.id.role_text);
+		loaderContainer = v.findViewById(R.id.loader_container);
 
 		addOrUpdatePlayer(MainActivity.getSelfPlayer());
 		for(Player pl : MainActivity.getRoom().getPlayers()) {
 			addOrUpdatePlayer(pl);
 		}
+
 		return v;
 	}
 
@@ -99,7 +103,9 @@ public class GameFragment extends Fragment {
 
 	public void addOrUpdatePlayer(Player player) {
 		if(!loadFinished) return;
+		if(playerList == null) return;
 		playerList.post(() -> {
+			System.out.println("UPDATE PLAYER " + player.getID());
 			LinearLayout ll = playerElements.get(player.getID());
 			if(ll == null) {
 				ll = new LinearLayout(getContext());
@@ -272,7 +278,28 @@ public class GameFragment extends Fragment {
 				roleText.setText(MainActivity.getSelfRole().name());
 			}else {
 				roleText.setTextColor(Color.BLACK);
-				roleText.setText("");
+				roleText.setText("Game not running");
+			}
+		});
+	}
+
+	public void loadChat() {
+		System.out.println("LOAD CHAT");
+		getLayoutInflater().inflate(R.layout.chat, loaderContainer);
+		playerElements.clear();
+		playerList = null;
+		updateAll();
+	}
+
+	public void loadPlayerList() {
+		System.out.println("LOAD PLAYER LIST");
+		View v = getLayoutInflater().inflate(R.layout.player_list, loaderContainer);
+		playerList = v.findViewById(R.id.player_list);
+
+		playerList.post(() -> {
+			addOrUpdatePlayer(MainActivity.getSelfPlayer());
+			for(Player pl : MainActivity.getRoom().getPlayers()) {
+				addOrUpdatePlayer(pl);
 			}
 		});
 	}

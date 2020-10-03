@@ -15,7 +15,7 @@
         android:layout_height="200dp"
         android:layout_weight="0"
         android:contentDescription="@string/secret_hitler"
-        app:srcCompat="@drawable/ic_secret_hitler_logo" />
+        app:srcCompat="@drawable/ic_ico_text" />
 
     <Space
         android:layout_width="match_parent"

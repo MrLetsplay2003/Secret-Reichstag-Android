@@ -217,6 +217,14 @@ public class MainActivity extends AppCompatActivity {
 		// TODO: proper menu
 	}
 
+	public void chat(View v) {
+		((GameFragment) currentFragment).loadChat();
+	}
+
+	public void playerList(View v) {
+		((GameFragment) currentFragment).loadPlayerList();
+	}
+
 	public void roomSettingsConfirm(View v) {
 		RoomSettingsFragment fr = (RoomSettingsFragment) currentFragment;
 
