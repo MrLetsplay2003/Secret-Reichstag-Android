@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
 	// TODO: test quit game
 	// TODO: test no duplicate votes on rejoin
 	// TODO: test custom drawing display size
+	// TODO: implement change view buttons (player list, chat/event log, menu)
 
 	private static Room room;
 	private static Player selfPlayer;
