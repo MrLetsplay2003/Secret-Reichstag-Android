@@ -23,17 +23,19 @@ import me.mrletsplay.srweb.game.state.board.GameBoardActionField;
 public class UIGameBoard extends SurfaceView implements SurfaceHolder.Callback {
 
 	private GameParty party;
+	private boolean frameTop;
 
 	public UIGameBoard(Context context, AttributeSet attrs) {
-		this(context, GameParty.LIBERAL);
+		this(context, GameParty.LIBERAL, true);
 	}
 
-	public UIGameBoard(Context context, GameParty party) {
+	public UIGameBoard(Context context, GameParty party, boolean frameTop) {
 		super(context);
 
 		getHolder().addCallback(this);
 
 		this.party = party;
+		this.frameTop = frameTop;
 	}
 
 	public void update() {
@@ -71,7 +73,7 @@ public class UIGameBoard extends SurfaceView implements SurfaceHolder.Callback {
 		canvas.drawPaint(p);
 
 		p.setColor(getColor("board_" + party.name().toLowerCase() + "_outer_fill"));
-		canvas.drawRect(3 * density, 3 * density, getWidth() - 3 * density, getHeight() - 3 * density, p);
+		canvas.drawRect(3 * density, frameTop ? 3 * density : 0, getWidth() - 3 * density, getHeight() - 3 * density, p);
 
 		int numCards = party == GameParty.LIBERAL ? 5 : 6;
 		int cardHeight = getHeight() * 3 / 5;

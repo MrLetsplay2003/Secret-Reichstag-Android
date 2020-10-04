@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 	private static JSONObject voteResults;
 	private static JSONObject previousRoles;
 	private static boolean gamePaused;
+	private static List<String> eventLog = new ArrayList<>();
 
 
 	private String roomID;
@@ -300,6 +301,8 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void joinServer(PacketClientConnect connectPacket) {
+		eventLog = new ArrayList<>();
+
 		new Thread(() -> {
 			try {
 				Networking.init(false);
@@ -451,6 +454,15 @@ public class MainActivity extends AppCompatActivity {
 
 	public static boolean isGamePaused() {
 		return gamePaused;
+	}
+
+	public static void addEventLogEntry(String entry) {
+		eventLog.add(entry);
+		if(eventLog.size() > 100) eventLog.remove(0);
+	}
+
+	public static List<String> getEventLog() {
+		return eventLog;
 	}
 
 	@Override

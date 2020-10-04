@@ -53,6 +53,7 @@ import me.mrletsplay.srweb.packet.impl.PacketClientPerformAction;
 import me.mrletsplay.srweb.packet.impl.PacketClientSelectChancellor;
 import me.mrletsplay.srweb.packet.impl.PacketClientVeto;
 import me.mrletsplay.srweb.packet.impl.PacketClientVote;
+import me.mrletsplay.srweb.packet.impl.PacketServerEventLogEntry;
 import me.mrletsplay.srweb.packet.impl.PacketServerPauseGame;
 import me.mrletsplay.srweb.packet.impl.PacketServerPickCards;
 import me.mrletsplay.srweb.packet.impl.PacketServerPlayerAction;
@@ -417,6 +418,9 @@ public class DefaultPacketListener implements PacketListener {
 			if(currentActionDialog != null) currentActionDialog.getDialog().dismiss();
 		}else if(d instanceof PacketServerUnpauseGame) {
 			MainActivity.setGamePaused(false);
+		}else if(d instanceof PacketServerEventLogEntry) {
+			MainActivity.addEventLogEntry(((PacketServerEventLogEntry) d).getMessage());
+			fr.addEventLogEntry(((PacketServerEventLogEntry) d).getMessage());
 		}
 	}
 

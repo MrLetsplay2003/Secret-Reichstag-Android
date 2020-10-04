@@ -10,9 +10,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Space;
 import android.widget.TextView;
 
@@ -45,7 +47,6 @@ import me.mrletsplay.srweb.packet.impl.PacketClientStartGame;
 
 public class GameFragment extends Fragment {
 
-	private LinearLayout playerList;
 	private LinearLayout gameBoardContainer;
 	private List<UIGameBoard> gameBoards = new ArrayList<>();
 	private Map<String, LinearLayout> playerElements = new HashMap<>();
@@ -54,6 +55,10 @@ public class GameFragment extends Fragment {
 	private TextView roleText;
 	private boolean loadFinished;
 	private FrameLayout loaderContainer;
+
+	private LinearLayout playerList;
+	private TextView eventLog;
+	private ScrollView eventLogScroll;
 
 	@Override
 	public void onAttach(@NonNull Context context) {
@@ -67,17 +72,17 @@ public class GameFragment extends Fragment {
 
 		gameBoardContainer = v.findViewById(R.id.game_board_container);
 
-		UIGameBoard lib = new UIGameBoard(getContext(), GameParty.LIBERAL);
+		UIGameBoard lib = new UIGameBoard(getContext(), GameParty.LIBERAL, true);
 		gameBoards.add(lib);
 		gameBoardContainer.addView(lib);
 
 		if(MainActivity.getRoom().getGameState().getCommunistBoard() != null) {
-			UIGameBoard comm = new UIGameBoard(getContext(), GameParty.COMMUNIST);
+			UIGameBoard comm = new UIGameBoard(getContext(), GameParty.COMMUNIST, false);
 			gameBoards.add(comm);
 			gameBoardContainer.addView(comm);
 		}
 
-		UIGameBoard fasc = new UIGameBoard(getContext(), GameParty.FASCIST);
+		UIGameBoard fasc = new UIGameBoard(getContext(), GameParty.FASCIST, false);
 		gameBoards.add(fasc);
 		gameBoardContainer.addView(fasc);
 
@@ -114,7 +119,9 @@ public class GameFragment extends Fragment {
 				ll.setLayoutMode(LinearLayout.HORIZONTAL);
 				TextView n = new TextView(getContext());
 				ll.addView(n);
+				System.out.println("CHILDREN: " + playerList.getChildCount());
 				playerList.addView(ll);
+				System.out.println("CHILDREN AFTER: " + playerList.getChildCount());
 				playerElements.put(player.getID(), ll);
 			}
 
@@ -211,6 +218,16 @@ public class GameFragment extends Fragment {
 		});
 	}
 
+	public void addEventLogEntry(String entry) {
+		if(eventLog == null) return;
+		eventLog.post(() -> {
+			eventLog.append("\n" + entry);
+			// eventLog.requestLayout();
+
+			eventLogScroll.post(() -> eventLogScroll.fullScroll(View.FOCUS_DOWN));
+		});
+	}
+
 	public void showStartDialogIfNeeded() {
 		// TODO: test start dialog after round ends
 		new Handler(Looper.getMainLooper()).post(() -> {
@@ -285,16 +302,35 @@ public class GameFragment extends Fragment {
 
 	public void loadChat() {
 		System.out.println("LOAD CHAT");
-		getLayoutInflater().inflate(R.layout.chat, loaderContainer);
-		playerElements.clear();
+		if(eventLog != null) return;
+
+		while(loaderContainer.getChildCount() > 0) loaderContainer.removeViewAt(0);
 		playerList = null;
-		updateAll();
+		playerElements.clear();
+
+		View v = getLayoutInflater().inflate(R.layout.chat, loaderContainer);
+
+		eventLog = v.findViewById(R.id.chat_box);
+
+		for(String entry : MainActivity.getEventLog()) {
+			eventLog.append("\n" + entry);
+		}
+
+		eventLogScroll = v.findViewById(R.id.chat_scroll);
+		eventLogScroll.post(() -> eventLogScroll.fullScroll(View.FOCUS_DOWN));
 	}
 
 	public void loadPlayerList() {
 		System.out.println("LOAD PLAYER LIST");
+		if(playerList != null) return;
+
+		while(loaderContainer.getChildCount() > 0) loaderContainer.removeViewAt(0);
+		eventLog = null;
+		eventLogScroll = null;
+
 		View v = getLayoutInflater().inflate(R.layout.player_list, loaderContainer);
 		playerList = v.findViewById(R.id.player_list);
+		playerElements.clear();
 
 		playerList.post(() -> {
 			addOrUpdatePlayer(MainActivity.getSelfPlayer());
