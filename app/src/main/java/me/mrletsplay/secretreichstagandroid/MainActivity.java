@@ -210,13 +210,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	public void menu(View v) {
-		AlertDialog ad = new AlertDialog.Builder(this)
-				.setTitle("Menu (DEBUG)")
-				.setMessage("Room ID: " + room.getID())
-				.create();
-
-		ad.show();
-		// TODO: proper menu
+		((GameFragment) currentFragment).loadMenu();
 	}
 
 	public void chat(View v) {

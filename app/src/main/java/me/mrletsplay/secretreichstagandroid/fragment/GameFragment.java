@@ -59,6 +59,7 @@ public class GameFragment extends Fragment {
 	private LinearLayout playerList;
 	private TextView eventLog;
 	private ScrollView eventLogScroll;
+	private TextView menuRoomID;
 
 	@Override
 	public void onAttach(@NonNull Context context) {
@@ -110,7 +111,6 @@ public class GameFragment extends Fragment {
 		if(!loadFinished) return;
 		if(playerList == null) return;
 		playerList.post(() -> {
-			System.out.println("UPDATE PLAYER " + player.getID());
 			LinearLayout ll = playerElements.get(player.getID());
 			if(ll == null) {
 				ll = new LinearLayout(getContext());
@@ -119,9 +119,7 @@ public class GameFragment extends Fragment {
 				ll.setLayoutMode(LinearLayout.HORIZONTAL);
 				TextView n = new TextView(getContext());
 				ll.addView(n);
-				System.out.println("CHILDREN: " + playerList.getChildCount());
 				playerList.addView(ll);
-				System.out.println("CHILDREN AFTER: " + playerList.getChildCount());
 				playerElements.put(player.getID(), ll);
 			}
 
@@ -301,15 +299,11 @@ public class GameFragment extends Fragment {
 	}
 
 	public void loadChat() {
-		System.out.println("LOAD CHAT");
 		if(eventLog != null) return;
 
-		while(loaderContainer.getChildCount() > 0) loaderContainer.removeViewAt(0);
-		playerList = null;
-		playerElements.clear();
+		clearAll();
 
 		View v = getLayoutInflater().inflate(R.layout.chat, loaderContainer);
-
 		eventLog = v.findViewById(R.id.chat_box);
 
 		for(String entry : MainActivity.getEventLog()) {
@@ -321,16 +315,12 @@ public class GameFragment extends Fragment {
 	}
 
 	public void loadPlayerList() {
-		System.out.println("LOAD PLAYER LIST");
 		if(playerList != null) return;
 
-		while(loaderContainer.getChildCount() > 0) loaderContainer.removeViewAt(0);
-		eventLog = null;
-		eventLogScroll = null;
+		clearAll();
 
 		View v = getLayoutInflater().inflate(R.layout.player_list, loaderContainer);
 		playerList = v.findViewById(R.id.player_list);
-		playerElements.clear();
 
 		playerList.post(() -> {
 			addOrUpdatePlayer(MainActivity.getSelfPlayer());
@@ -338,6 +328,26 @@ public class GameFragment extends Fragment {
 				addOrUpdatePlayer(pl);
 			}
 		});
+	}
+
+	public void loadMenu() {
+		if(menuRoomID != null) return;
+
+		clearAll();
+
+		View v = getLayoutInflater().inflate(R.layout.menu, loaderContainer);
+		menuRoomID = v.findViewById(R.id.menu_room_id);
+
+		menuRoomID.setText("Room ID: " + MainActivity.getRoom().getID());
+	}
+
+	private void clearAll() {
+		while(loaderContainer.getChildCount() > 0) loaderContainer.removeViewAt(0);
+		playerList = null;
+		playerElements.clear();
+		eventLog = null;
+		eventLogScroll = null;
+		menuRoomID = null;
 	}
 
 	public void quit() {
