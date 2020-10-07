@@ -1,7 +1,10 @@
 package me.mrletsplay.secretreichstagandroid;
 
+import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -129,10 +132,29 @@ public class MainActivity extends AppCompatActivity {
 		}).start();
 	}
 
+	private final Handler mHideHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			System.out.println("HIDE SYSTEM UI");
+			hideSystemUI();
+		}
+	};
+
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-		if(hasFocus) hideSystemUI();
+		System.out.println("FOCUS CHANGED: " + hasFocus);
+		if(hasFocus) {
+			mHideHandler.removeMessages(0);
+			mHideHandler.sendEmptyMessageDelayed(0, 300);
+			//hideSystemUI();
+		}
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		delayedHide();
 	}
 
 	private void hideSystemUI() {
@@ -142,6 +164,11 @@ public class MainActivity extends AppCompatActivity {
 				| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 				| View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 				| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+	}
+
+	private void delayedHide() {
+		mHideHandler.removeMessages(0);
+		mHideHandler.sendEmptyMessageDelayed(0, 300);
 	}
 
 	@Override
@@ -327,6 +354,9 @@ public class MainActivity extends AppCompatActivity {
 
 		t.addToBackStack(null);
 		t.commit();
+
+		mHideHandler.removeMessages(0);
+		mHideHandler.sendEmptyMessageDelayed(0, 300);
 	}
 
 	public static Room getRoom() {

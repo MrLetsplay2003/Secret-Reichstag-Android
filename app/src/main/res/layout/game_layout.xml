@@ -35,21 +35,22 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
             <TextView
                 android:id="@+id/role_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:fontFamily="@font/germania_one_regular"
-                android:gravity="center_horizontal"
                 android:textColor="@color/text"
                 android:textSize="18sp"
                 tools:text="ROLE" />
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:layout_weight="1" />
+                android:layout_height="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,45 +59,45 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <Space
+                <Button
+                    android:id="@+id/button2"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:layout_height="30dp"
+                    android:layout_weight="0"
+                    android:background="@color/reichstag"
+                    android:fontFamily="@font/germania_one_regular"
                     android:onClick="playerList"
-                    app:backgroundTint="@color/reichstag"
-                    app:srcCompat="@drawable/ic_exclamation" />
+                    android:text="@string/game_layout_player_list" />
 
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <Button
+                    android:id="@+id/button3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:layout_height="30dp"
+                    android:layout_weight="0"
+                    android:background="@color/reichstag"
+                    android:fontFamily="@font/germania_one_regular"
                     android:onClick="chat"
-                    app:srcCompat="@drawable/ic_exclamation" />
+                    android:text="@string/game_layout_chat" />
 
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <Button
+                    android:id="@+id/button4"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
+                    android:layout_height="30dp"
+                    android:layout_weight="0"
+                    android:background="@color/reichstag"
+                    android:fontFamily="@font/germania_one_regular"
                     android:onClick="menu"
-                    app:srcCompat="@drawable/ic_exclamation" />
+                    android:text="@string/game_layout_menu" />
 
                 <Space
                     android:layout_width="wrap_content"

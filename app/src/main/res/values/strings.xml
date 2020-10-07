@@ -54,8 +54,13 @@
     <string name="winner_text2">have won the game</string>
     <string name="winner_okay">Okay</string>
 
-    <string name="card_active">card_active</string>
-    <string name="card_index">card_index</string>
     <string name="ingame_menu_game_not_running">Game not running</string>
     <string name="ingame_menu_room_id">Room ID: %1$s</string>
+
+    <string name="game_layout_player_list">Players</string>
+    <string name="game_layout_chat">Chat</string>
+    <string name="game_layout_menu">Menu</string>
+
+    <string name="card_active">card_active</string>
+    <string name="card_index">card_index</string>
 </resources>
