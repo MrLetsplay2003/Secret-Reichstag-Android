@@ -10,7 +10,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -293,7 +292,7 @@ public class GameFragment extends Fragment {
 				roleText.setText(MainActivity.getSelfRole().name());
 			}else {
 				roleText.setTextColor(Color.BLACK);
-				roleText.setText("Game not running");
+				roleText.setText(R.string.ingame_menu_game_not_running);
 			}
 		});
 	}
@@ -335,10 +334,10 @@ public class GameFragment extends Fragment {
 
 		clearAll();
 
-		View v = getLayoutInflater().inflate(R.layout.menu, loaderContainer);
+		View v = getLayoutInflater().inflate(R.layout.ingame_menu, loaderContainer);
 		menuRoomID = v.findViewById(R.id.menu_room_id);
 
-		menuRoomID.setText("Room ID: " + MainActivity.getRoom().getID());
+		menuRoomID.setText(getString(R.string.ingame_menu_room_id, MainActivity.getRoom().getID()));
 	}
 
 	private void clearAll() {

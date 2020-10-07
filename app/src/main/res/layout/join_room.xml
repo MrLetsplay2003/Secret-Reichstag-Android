@@ -29,7 +29,7 @@
             android:fontFamily="@font/germania_one_regular"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:text="Room ID"
+            android:text="@string/join_room_id_label"
             android:textColor="@color/text" />
 
         <EditText
@@ -40,8 +40,9 @@
             android:layout_marginEnd="10dp"
             android:ems="10"
             android:fontFamily="@font/germania_one_regular"
-            android:hint="Room ID"
-            android:inputType="number" />
+            android:hint="@string/join_room_id_hint"
+            android:inputType="number"
+            android:autofillHints="no" />
     </LinearLayout>
 
     <Space
@@ -57,7 +58,7 @@
         android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
         android:onClick="roomIDConfirm"
-        android:text="Confirm"
+        android:text="@string/join_room_confirm"
         android:textSize="18sp" />
 
     <Space

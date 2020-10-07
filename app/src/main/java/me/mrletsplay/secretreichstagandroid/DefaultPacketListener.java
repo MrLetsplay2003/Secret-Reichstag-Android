@@ -1,7 +1,6 @@
 package me.mrletsplay.secretreichstagandroid;
 
 import android.content.res.ColorStateList;
-import android.drm.DrmStore;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
@@ -78,33 +77,34 @@ public class DefaultPacketListener implements PacketListener {
 		System.out.println(d);
 		GameFragment fr = (GameFragment) MainActivity.getCurrentFragment();
 
-		if(d instanceof PacketServerPlayerJoined) {
+		if (d instanceof PacketServerPlayerJoined) {
 			PacketServerPlayerJoined j = (PacketServerPlayerJoined) d;
-			if(!j.isRejoin()) {
+			if (!j.isRejoin()) {
 				MainActivity.getRoom().getPlayers().add(j.getPlayer());
-			}else {
-				for(Player pl : MainActivity.getRoom().getPlayers()) {
-					if(pl.getID().equals(j.getPlayer().getID())) pl.setOnline(true); // TODO: test fix: online doesn't update
+			} else {
+				for (Player pl : MainActivity.getRoom().getPlayers()) {
+					if (pl.getID().equals(j.getPlayer().getID()))
+						pl.setOnline(true); // TODO: test fix: online doesn't update
 				}
 			}
 			fr.addOrUpdatePlayer(j.getPlayer());
 			fr.showStartDialogIfNeeded();
-		}else if(d instanceof PacketServerPlayerLeft) {
+		} else if (d instanceof PacketServerPlayerLeft) {
 			PacketServerPlayerLeft l = (PacketServerPlayerLeft) d;
-			if(l.isHardLeave()) {
+			if (l.isHardLeave()) {
 				Iterator<Player> plI = MainActivity.getRoom().getPlayers().iterator();
-				while(plI.hasNext()) {
+				while (plI.hasNext()) {
 					Player pl = plI.next();
-					if(pl.getID().equals(l.getPlayer().getID())) {
+					if (pl.getID().equals(l.getPlayer().getID())) {
 						plI.remove();
 						break;
 					}
 				}
 
 				fr.removePlayer(l.getPlayer());
-			}else {
-				for(Player pl : MainActivity.getRoom().getPlayers()) {
-					if(pl.getID().equals(l.getPlayer().getID())) {
+			} else {
+				for (Player pl : MainActivity.getRoom().getPlayers()) {
+					if (pl.getID().equals(l.getPlayer().getID())) {
 						pl.setOnline(false);
 						break;
 					}
@@ -112,7 +112,7 @@ public class DefaultPacketListener implements PacketListener {
 
 				fr.addOrUpdatePlayer(l.getPlayer());
 			}
-		}else if(d instanceof PacketServerStartGame) {
+		} else if (d instanceof PacketServerStartGame) {
 			System.out.println("START GAME");
 			MainActivity.getRoom().setGameRunning(true);
 
@@ -124,14 +124,14 @@ public class DefaultPacketListener implements PacketListener {
 			MainActivity.setSelfVoted(false);
 
 			fr.updateAll();
-		}else if(d instanceof PacketServerUpdateGameState) {
+		} else if (d instanceof PacketServerUpdateGameState) {
 			GameState newState = ((PacketServerUpdateGameState) d).getNewState();
 			MainActivity.getRoom().setGameState(newState);
 			fr.updateAll();
 
-			if(newState.getMoveState() != GameMoveState.VOTE) MainActivity.setSelfVoted(false);
+			if (newState.getMoveState() != GameMoveState.VOTE) MainActivity.setSelfVoted(false);
 
-			if(newState.getMoveState() == GameMoveState.VOTE && !MainActivity.isSelfVoted() && !MainActivity.isPlayerDead(MainActivity.getSelfPlayer())) {
+			if (newState.getMoveState() == GameMoveState.VOTE && !MainActivity.isSelfVoted() && !MainActivity.isPlayerDead(MainActivity.getSelfPlayer())) {
 				runOnUiThread(() -> {
 					LayoutInflater inf = fr.getLayoutInflater();
 					View v = inf.inflate(R.layout.vote, null);
@@ -168,21 +168,21 @@ public class DefaultPacketListener implements PacketListener {
 						Networking.sendPacket(Packet.of(vote));
 					});
 
-					if(!MainActivity.isGamePaused()) voteDialog.show();
+					if (!MainActivity.isGamePaused()) voteDialog.show();
 				});
-			}else if(newState.getMoveState() == GameMoveState.SELECT_CHANCELLOR && newState.getPresident().getID().equals(MainActivity.getSelfPlayer().getID())) {
-				showPickPlayerDialog("Select a player to be the next chancellor",  pl ->
-						!MainActivity.isPlayerDead(pl)
-						&& (newState.getPreviousPresident() == null || !newState.getPreviousPresident().getID().equals(pl.getID()))
-						&& (newState.getPreviousChancellor() == null || !newState.getPreviousChancellor().getID().equals(pl.getID()))
-						&& !pl.getID().equals(MainActivity.getSelfPlayer().getID())
-						&& !(newState.getBlockedPlayer() != null && newState.getBlockedPlayer().getID().equals(pl.getID())),
+			} else if (newState.getMoveState() == GameMoveState.SELECT_CHANCELLOR && newState.getPresident().getID().equals(MainActivity.getSelfPlayer().getID())) {
+				showPickPlayerDialog("Select a player to be the next chancellor", pl ->
+								!MainActivity.isPlayerDead(pl)
+										&& (newState.getPreviousPresident() == null || !newState.getPreviousPresident().getID().equals(pl.getID()))
+										&& (newState.getPreviousChancellor() == null || !newState.getPreviousChancellor().getID().equals(pl.getID()))
+										&& !pl.getID().equals(MainActivity.getSelfPlayer().getID())
+										&& !(newState.getBlockedPlayer() != null && newState.getBlockedPlayer().getID().equals(pl.getID())),
 						player -> {
 							PacketClientSelectChancellor ch = new PacketClientSelectChancellor();
 							ch.setPlayerID(player.getID());
 							Networking.sendPacket(Packet.of(ch));
 						});
-			}else if(newState.getMoveState() == GameMoveState.DRAW_CARDS && newState.getPresident().getID().equals(MainActivity.getSelfPlayer().getID())) {
+			} else if (newState.getMoveState() == GameMoveState.DRAW_CARDS && newState.getPresident().getID().equals(MainActivity.getSelfPlayer().getID())) {
 				/*runOnUiThread(() -> {
 					AlertDialog drawDialog = new AlertDialog.Builder(fr.getContext())
 							.setTitle("Draw cards")
@@ -217,47 +217,45 @@ public class DefaultPacketListener implements PacketListener {
 						Networking.sendPacket(Packet.of(draw));
 					});
 
-					if(!MainActivity.isGamePaused()) drawDialog.show();
+					if (!MainActivity.isGamePaused()) drawDialog.show();
 				});
 			}
-		}else if(d instanceof PacketServerVoteResults) {
+		} else if (d instanceof PacketServerVoteResults) {
 			System.out.println("VOTE RESULTS");
 			PacketServerVoteResults vr = (PacketServerVoteResults) d;
 			MainActivity.setVoteResults(vr.getVotes());
 			fr.updateAll();
 
-			if(currentSnackbar != null) currentSnackbar.dismiss();
+			if (currentSnackbar != null) currentSnackbar.dismiss();
 			currentSnackbar = Snackbar.make(fr.getView().findViewById(R.id.player_list_container), "Vote results are shown", Snackbar.LENGTH_INDEFINITE)
-				.setBackgroundTint(Color.argb(128, 64, 64, 64))
-				.setAction("Dismiss", v -> {
-					currentSnackbar = null;
-					MainActivity.setVoteResults(null);
-					fr.updateAll();
-				});
+					.setBackgroundTint(Color.argb(128, 64, 64, 64))
+					.setAction("Dismiss", v -> {
+						currentSnackbar = null;
+						MainActivity.setVoteResults(null);
+						fr.updateAll();
+					});
 
 			currentSnackbar.show();
-		}else if(d instanceof PacketServerPickCards) {
+		} else if (d instanceof PacketServerPickCards) {
 			System.out.println("PICK CARDS");
 			showCardsDialog("Select the card  you want to dismiss", ((PacketServerPickCards) d).getCards(), true, index -> {
 				PacketClientDiscardCard dc = new PacketClientDiscardCard();
 				dc.setDiscardIndex(index);
 				Networking.sendPacket(Packet.of(dc));
 			});
-		}else if(d instanceof PacketServerPlayerAction) {
+		} else if (d instanceof PacketServerPlayerAction) {
 			PacketServerPlayerAction a = (PacketServerPlayerAction) d;
-			switch(a.getAction()) {
-				case EXAMINE_TOP_CARDS:
-				{
+			switch (a.getAction()) {
+				case EXAMINE_TOP_CARDS: {
 					ActionExamineTopCards tc = (ActionExamineTopCards) a.getData();
 					showCardsDialog("These are the top three cards on the card pile", tc.getCards(), false, null);
 					Networking.sendPacket(Packet.of(new PacketClientPerformAction()));
 					break;
 				}
-				case EXAMINE_TOP_CARDS_OTHER:
-				{
+				case EXAMINE_TOP_CARDS_OTHER: {
 					showPickPlayerDialog("Select a player to view the top three cards", pl ->
 							!MainActivity.getSelfPlayer().getID().equals(pl.getID())
-							&& !MainActivity.isPlayerDead(pl), pl -> {
+									&& !MainActivity.isPlayerDead(pl), pl -> {
 						PacketClientPerformAction pa = new PacketClientPerformAction();
 						ActionExamineTopCardsOther k = new ActionExamineTopCardsOther();
 						k.setPlayerID(pl.getID());
@@ -266,11 +264,10 @@ public class DefaultPacketListener implements PacketListener {
 					});
 					break;
 				}
-				case KILL_PLAYER:
-				{
+				case KILL_PLAYER: {
 					showPickPlayerDialog("Select a player to be killed", pl ->
 							!MainActivity.getSelfPlayer().getID().equals(pl.getID())
-							&& !MainActivity.isPlayerDead(pl), pl -> {
+									&& !MainActivity.isPlayerDead(pl), pl -> {
 						PacketClientPerformAction pa = new PacketClientPerformAction();
 						ActionKillPlayer k = new ActionKillPlayer();
 						k.setPlayerID(pl.getID());
@@ -279,11 +276,10 @@ public class DefaultPacketListener implements PacketListener {
 					});
 					break;
 				}
-				case PICK_PRESIDENT:
-				{
+				case PICK_PRESIDENT: {
 					showPickPlayerDialog("Select a player to be the next president", pl ->
 							!MainActivity.getSelfPlayer().getID().equals(pl.getID())
-							&& !MainActivity.isPlayerDead(pl), pl -> {
+									&& !MainActivity.isPlayerDead(pl), pl -> {
 						PacketClientPerformAction pa = new PacketClientPerformAction();
 						ActionPickPresident k = new ActionPickPresident();
 						k.setPlayerID(pl.getID());
@@ -296,7 +292,7 @@ public class DefaultPacketListener implements PacketListener {
 				{
 					showPickPlayerDialog("Select the player you want to inspect", pl ->
 							!MainActivity.getSelfPlayer().getID().equals(pl.getID())
-							&& !MainActivity.isPlayerDead(pl), pl -> {
+									&& !MainActivity.isPlayerDead(pl), pl -> {
 						PacketClientPerformAction pa = new PacketClientPerformAction();
 						ActionInspectPlayer k = new ActionInspectPlayer();
 						k.setPlayerID(pl.getID());
@@ -325,20 +321,19 @@ public class DefaultPacketListener implements PacketListener {
 									currentActionDialog = null;
 								});
 
-								if(!MainActivity.isGamePaused()) inspectDialog.show();
+								if (!MainActivity.isGamePaused()) inspectDialog.show();
 							});
 						});
 					});
 					break;
 				}
-				case BLOCK_PLAYER:
-				{
+				case BLOCK_PLAYER: {
 					GameState state = MainActivity.getRoom().getGameState();
 					showPickPlayerDialog("Select a player to be unelectable the next turn", pl ->
 							!MainActivity.getSelfPlayer().getID().equals(pl.getID())
-							&& !state.getChancellor().getID().equals(pl.getID())
-							&& !(state.getPresident().getID().equals(pl.getID()) && MainActivity.getRoom().getPlayers().size() >= 8)
-							&& !MainActivity.isPlayerDead(pl), pl -> {
+									&& !state.getChancellor().getID().equals(pl.getID())
+									&& !(state.getPresident().getID().equals(pl.getID()) && MainActivity.getRoom().getPlayers().size() >= 8)
+									&& !MainActivity.isPlayerDead(pl), pl -> {
 						PacketClientPerformAction pa = new PacketClientPerformAction();
 						ActionBlockPlayer k = new ActionBlockPlayer();
 						k.setPlayerID(pl.getID());
@@ -348,14 +343,14 @@ public class DefaultPacketListener implements PacketListener {
 					break;
 				}
 			}
-		}else if(d instanceof PacketServerStopGame) {
+		} else if (d instanceof PacketServerStopGame) {
 			MainActivity.setVoteResults(null);
 			MainActivity.setSelfRole(null);
 			MainActivity.setSelfVoted(false);
 			MainActivity.setTeammates(null);
 			MainActivity.setLeader(null);
-			if(currentAlert != null) currentAlert.dismiss();
-			if(currentSnackbar != null) currentSnackbar.dismiss();
+			if (currentAlert != null) currentAlert.dismiss();
+			if (currentSnackbar != null) currentSnackbar.dismiss();
 			MainActivity.setPreviousRoles(((PacketServerStopGame) d).getRoles());
 			// TODO: test winner dialog
 			runOnUiThread(() -> {
@@ -379,7 +374,7 @@ public class DefaultPacketListener implements PacketListener {
 				currentAlert = winnerDialog;
 				winnerDialog.show();
 			});
-		}else if(d instanceof PacketServerVeto) {
+		} else if (d instanceof PacketServerVeto) {
 			runOnUiThread(() -> {
 				LayoutInflater inf = fr.getLayoutInflater();
 				View v = inf.inflate(R.layout.veto, null);
@@ -411,14 +406,14 @@ public class DefaultPacketListener implements PacketListener {
 					Networking.sendPacket(Packet.of(veto));
 				});
 
-				if(!MainActivity.isGamePaused()) vetoDialog.show();
+				if (!MainActivity.isGamePaused()) vetoDialog.show();
 			});
-		}else if(d instanceof PacketServerPauseGame) {
+		} else if (d instanceof PacketServerPauseGame) {
 			MainActivity.setGamePaused(true);
-			if(currentActionDialog != null) currentActionDialog.getDialog().dismiss();
-		}else if(d instanceof PacketServerUnpauseGame) {
+			if (currentActionDialog != null) currentActionDialog.getDialog().dismiss();
+		} else if (d instanceof PacketServerUnpauseGame) {
 			MainActivity.setGamePaused(false);
-		}else if(d instanceof PacketServerEventLogEntry) {
+		} else if (d instanceof PacketServerEventLogEntry) {
 			MainActivity.addEventLogEntry(((PacketServerEventLogEntry) d).getMessage());
 			fr.addEventLogEntry(((PacketServerEventLogEntry) d).getMessage());
 		}
@@ -427,7 +422,7 @@ public class DefaultPacketListener implements PacketListener {
 	private ActionDialog showActionDialog(AlertDialog dialog, View view) {
 		Fragment f = MainActivity.getCurrentFragment();
 
-		if(currentActionDialog != null) currentActionDialog.dismiss();
+		if (currentActionDialog != null) currentActionDialog.dismiss();
 
 		MovableFloatingActionButton mfab = new MovableFloatingActionButton(f.getContext());
 		mfab.setImageDrawable(ResourcesCompat.getDrawable(f.getResources(), R.drawable.ic_exclamation, null));
@@ -441,7 +436,7 @@ public class DefaultPacketListener implements PacketListener {
 		});
 
 		mfab.setOnClickListener(v -> {
-			if(!MainActivity.isGamePaused()) dialog.show();
+			if (!MainActivity.isGamePaused()) dialog.show();
 		});
 
 		Button btn = view.findViewById(R.id.dialog_hide);
@@ -466,8 +461,8 @@ public class DefaultPacketListener implements PacketListener {
 			ListView lv = v2.findViewById(R.id.chancellor_players);
 
 			List<Player> players = new ArrayList<>();
-			for(Player pl : MainActivity.getRoom().getPlayers()) {
-				if(playerFilter != null && !playerFilter.test(pl)) continue;
+			for (Player pl : MainActivity.getRoom().getPlayers()) {
+				if (playerFilter != null && !playerFilter.test(pl)) continue;
 				players.add(pl);
 			}
 
@@ -503,10 +498,10 @@ public class DefaultPacketListener implements PacketListener {
 			card3.setTag(R.string.card_active, true);
 
 			View.OnClickListener onClick = view -> {
-				if((boolean) view.getTag(R.string.card_active)) {
+				if ((boolean) view.getTag(R.string.card_active)) {
 					view.setTag(R.string.card_active, false);
 					((ImageView) view).setImageBitmap(GameAsset.ARTICLE_BACK.getBitmap());
-				}else {
+				} else {
 					view.setTag(R.string.card_active, true);
 					((ImageView) view).setImageBitmap(GameAsset.valueOf(cards.get((int) view.getTag(R.string.card_index)).getParty().name() + "_ARTICLE").getBitmap());
 				}
@@ -514,18 +509,18 @@ public class DefaultPacketListener implements PacketListener {
 
 			card1.setImageBitmap(GameAsset.valueOf(cards.get(0).getParty().name() + "_ARTICLE").getBitmap());
 			card1.setTag(R.string.card_index, 0);
-			if(dismiss) card1.setOnClickListener(onClick);
+			if (dismiss) card1.setOnClickListener(onClick);
 
 			card2.setImageBitmap(GameAsset.valueOf(cards.get(1).getParty().name() + "_ARTICLE").getBitmap());
 			card2.setTag(R.string.card_index, 1);
-			if(dismiss) card2.setOnClickListener(onClick);
+			if (dismiss) card2.setOnClickListener(onClick);
 
-			if(cards.size() < 3) {
+			if (cards.size() < 3) {
 				((ViewGroup) card3.getParent()).removeView(card3);
-			}else {
+			} else {
 				card3.setImageBitmap(GameAsset.valueOf(cards.get(2).getParty().name() + "_ARTICLE").getBitmap());
 				card3.setTag(R.string.card_index, 2);
-				if(dismiss) card3.setOnClickListener(onClick);
+				if (dismiss) card3.setOnClickListener(onClick);
 			}
 
 			TextView pickCardsText = v.findViewById(R.id.pick_cards_text);
@@ -534,7 +529,7 @@ public class DefaultPacketListener implements PacketListener {
 			Button confirmButton = v.findViewById(R.id.pick_cards_confirm);
 
 			confirmButton.setOnClickListener(view -> {
-				if(dismiss) {
+				if (dismiss) {
 					List<ImageView> vs = new ArrayList<>(Arrays.asList(card1, card2, card3));
 					List<Integer> sel = new ArrayList<>();
 					for (int i = 0; i < vs.size(); i++) {
@@ -553,14 +548,14 @@ public class DefaultPacketListener implements PacketListener {
 				currentActionDialog = null;
 			});
 
-			if(!MainActivity.isGamePaused()) pickDialog.show();
+			if (!MainActivity.isGamePaused()) pickDialog.show();
 		});
 	}
 
 	public void quit() {
-		if(currentSnackbar != null) currentSnackbar.dismiss();
-		if(currentAlert != null) currentAlert.dismiss();
-		if(currentActionDialog != null) currentActionDialog.dismiss();
+		if (currentSnackbar != null) currentSnackbar.dismiss();
+		if (currentAlert != null) currentAlert.dismiss();
+		if (currentActionDialog != null) currentActionDialog.dismiss();
 		// TODO: test quit
 	}
 

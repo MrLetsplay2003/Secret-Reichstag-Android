@@ -1,35 +1,19 @@
 package me.mrletsplay.secretreichstagandroid;
 
-import com.google.android.gms.common.util.JsonUtils;
-import com.neovisionaries.ws.client.ThreadType;
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketFactory;
-import com.neovisionaries.ws.client.WebSocketFrame;
-import com.neovisionaries.ws.client.WebSocketListener;
-import com.neovisionaries.ws.client.WebSocketState;
 
 import org.json.JSONObject;
-import org.json.JSONStringer;
-import org.json.JSONTokener;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.net.ssl.SSLContext;
-
 import java8.util.concurrent.CompletableFuture;
-import me.mrletsplay.srweb.game.GameMode;
-import me.mrletsplay.srweb.game.Room;
-import me.mrletsplay.srweb.game.RoomSettings;
 import me.mrletsplay.srweb.packet.Packet;
-import me.mrletsplay.srweb.packet.PacketData;
-import me.mrletsplay.srweb.packet.impl.PacketClientConnect;
 
 public class Networking {
 

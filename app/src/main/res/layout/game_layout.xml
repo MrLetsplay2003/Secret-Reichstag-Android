@@ -42,9 +42,9 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/germania_one_regular"
                 android:gravity="center_horizontal"
-                android:text="ROLE"
                 android:textColor="@color/text"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:text="ROLE" />
 
             <Space
                 android:layout_width="match_parent"
@@ -81,6 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
+                    android:focusable="true"
                     android:onClick="chat"
                     app:srcCompat="@drawable/ic_exclamation" />
 
@@ -93,6 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:clickable="true"
+                    android:focusable="true"
                     android:onClick="menu"
                     app:srcCompat="@drawable/ic_exclamation" />
 

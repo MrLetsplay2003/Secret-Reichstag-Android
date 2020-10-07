@@ -13,10 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import me.mrletsplay.secretreichstagandroid.R;
 import me.mrletsplay.srweb.game.GameMode;

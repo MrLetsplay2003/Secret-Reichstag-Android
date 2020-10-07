@@ -9,14 +9,9 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.core.content.res.ResourcesCompat;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import me.mrletsplay.secretreichstagandroid.GameAsset;
 import me.mrletsplay.secretreichstagandroid.MainActivity;

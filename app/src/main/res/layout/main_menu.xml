@@ -14,12 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_weight="0"
-        android:contentDescription="@string/secret_hitler"
+        android:contentDescription="@string/main_menu_icon_description"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
-        app:srcCompat="@drawable/ic_sh_text" />
+        app:srcCompat="@drawable/ic_secret_hitler_logo" />
 
     <Space
         android:layout_width="match_parent"
@@ -35,7 +35,7 @@
         android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
         android:onClick="newRoom"
-        android:text="@string/button_new_room"
+        android:text="@string/main_menu_new_room"
         android:textSize="18sp" />
 
     <Space
@@ -51,7 +51,7 @@
         android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
         android:onClick="joinRoom"
-        android:text="@string/button_join_room"
+        android:text="@string/main_menu_join_room"
         android:textSize="18sp" />
 
     <Space
@@ -68,7 +68,7 @@
         android:enabled="true"
         android:fontFamily="@font/germania_one_regular"
         android:onClick="rejoinRoom"
-        android:text="@string/button_rejoin_room"
+        android:text="@string/main_menu_rejoin_room"
         android:textSize="18sp" />
 
     <Space
@@ -84,7 +84,7 @@
         android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
         android:onClick="settings"
-        android:text="@string/button_settings"
+        android:text="@string/main_menu_settings"
         android:textSize="18sp" />
 
 </LinearLayout>

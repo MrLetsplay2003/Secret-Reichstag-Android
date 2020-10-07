@@ -5,11 +5,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import me.mrletsplay.secretreichstagandroid.MainActivity;
 
 public class MovableFloatingActionButton extends FloatingActionButton implements View.OnTouchListener {
 

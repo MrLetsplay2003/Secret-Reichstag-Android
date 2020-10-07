@@ -1,20 +1,61 @@
 <resources>
     <string name="app_name">Secret Reichstag</string>
-    <string name="button_new_room">New Room</string>
-    <string name="button_join_room">Join Room</string>
-    <string name="button_rejoin_room">Rejoin Room</string>
-    <string name="okay">Okay</string>
-    <string name="secret_hitler">Secret Hitler</string>
-    <string name="room_name_label">Room Name</string>
-    <string name="room_name_hint">Room Name</string>
-    <string name="max_players_label">Max Players</string>
-    <string name="max_players_hint">Max Players</string>
-    <string name="game_mode_label">Game Mode</string>
-    <string name="create_room">Create Room</string>
+
+    <string name="main_menu_new_room">New Room</string>
+    <string name="main_menu_join_room">Join Room</string>
+    <string name="main_menu_rejoin_room">Rejoin Room</string>
+    <string name="main_menu_settings">Settings</string>
+    <string name="main_menu_icon_description">Secret Hitler</string>
+
+    <string name="room_settings_title">Room Settings</string>
+    <string name="room_settings_room_name_label">Room Name</string>
+    <string name="room_settings_room_name_hint">Room Name</string>
+    <string name="room_settings_max_players_label">Max Players</string>
+    <string name="room_settings_max_players_hint">Max Players</string>
+    <string name="room_settings_game_mode_label">Game Mode</string>
+    <string name="room_settings_create_room">Create Room</string>
+
+    <string name="advanced_room_settings_title">Advanced Room Settings</string>
+
+    <string name="join_room_id_label">Room ID</string>
+    <string name="join_room_id_hint">Room ID</string>
+    <string name="join_room_confirm">Confirm</string>
+
+    <string name="select_username_name_label">Username</string>
+    <string name="select_username_name_hint">Username</string>
+    <string name="select_username_confirm">Join Room</string>
+
+    <string name="error_okay">Okay</string>
+
+    <string name="event_log_start">The event log starts here</string>
+    <string name="chat_disabled">Chat is disabled for now</string>
+
+    <string name="action_dialog_hide">Hide</string>
+
+    <string name="vote_text1">proposes</string>
+    <string name="vote_text2">to be the next chancellor</string>
     <string name="vote_yes">Vote Yes</string>
     <string name="vote_no">Vote No</string>
 
+    <string name="draw_cards_title">You need to draw some cards</string>
+    <string name="draw_cards_confirm">Draw Cards</string>
+
+    <string name="inspect_player_okay">Okay</string>
+
+    <string name="pick_cards_title">Select the card  you want to dismiss</string>
+    <string name="pick_cards_card_description">Policy Card</string>
+    <string name="pick_cards_confirm">Confirm</string>
+
+    <string name="veto_text">is requesting a veto</string>
+    <string name="veto_accept">Accept Veto</string>
+    <string name="veto_decline">Decline Veto</string>
+
+    <string name="winner_text1">The</string>
+    <string name="winner_text2">have won the game</string>
+    <string name="winner_okay">Okay</string>
+
     <string name="card_active">card_active</string>
     <string name="card_index">card_index</string>
-    <string name="button_settings">Settings</string>
+    <string name="ingame_menu_game_not_running">Game not running</string>
+    <string name="ingame_menu_room_id">Room ID: %1$s</string>
 </resources>

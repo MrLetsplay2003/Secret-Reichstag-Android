@@ -18,8 +18,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/germania_one_regular"
         android:gravity="center_horizontal"
-        android:text="USERNAME"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        tools:text="USERNAME" />
 
     <Space
         android:layout_width="match_parent"
@@ -45,8 +45,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/germania_one_regular"
         android:gravity="center_horizontal"
-        android:text="ROLE"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        tools:text="ROLE" />
 
     <Space
         android:layout_width="match_parent"
@@ -60,7 +60,7 @@
         android:layout_marginEnd="10dp"
         android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
-        android:text="Okay"
+        android:text="@string/inspect_player_okay"
         android:textSize="18sp" />
 
     <Space
@@ -77,7 +77,7 @@
         android:layout_weight="0"
         android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
-        android:text="Hide"
+        android:text="@string/action_dialog_hide"
         android:textSize="18sp" />
 
 </LinearLayout>

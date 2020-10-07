@@ -23,7 +23,7 @@ public class SerializationUtils {
 			Iterator<String> k = obj.keys();
 			while(k.hasNext()) {
 				String key = k.next();
-				Field f = null;
+				Field f;
 				try {
 					f = t.getClass().getDeclaredField(key);
 				}catch(NoSuchFieldException e) {

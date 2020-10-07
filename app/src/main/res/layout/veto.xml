@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
@@ -17,8 +18,8 @@
         android:layout_weight="0"
         android:fontFamily="@font/germania_one_regular"
         android:gravity="center_horizontal"
-        android:text="USERNAME"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        tools:text="USERNAME" />
 
     <Space
         android:layout_width="match_parent"
@@ -31,7 +32,7 @@
         android:layout_weight="0"
         android:fontFamily="@font/germania_one_regular"
         android:gravity="center_horizontal"
-        android:text="is requesting a veto"
+        android:text="@string/veto_text"
         android:textSize="18sp" />
 
     <Space
@@ -43,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/veto_yes"
@@ -54,7 +55,7 @@
             android:layout_weight="1"
             android:background="@drawable/round_shape"
             android:fontFamily="@font/germania_one_regular"
-            android:text="Accept Veto"
+            android:text="@string/veto_accept"
             android:textSize="18sp" />
 
         <Button
@@ -66,7 +67,7 @@
             android:layout_weight="1"
             android:background="@drawable/round_shape"
             android:fontFamily="@font/germania_one_regular"
-            android:text="Decline Veto"
+            android:text="@string/veto_decline"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -84,7 +85,7 @@
         android:layout_weight="0"
         android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
-        android:text="Hide"
+        android:text="@string/action_dialog_hide"
         android:textSize="18sp" />
 
 </LinearLayout>

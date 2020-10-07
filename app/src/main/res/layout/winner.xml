@@ -18,7 +18,7 @@
         android:layout_weight="0"
         android:fontFamily="@font/germania_one_regular"
         android:gravity="center_horizontal"
-        android:text="The"
+        android:text="@string/winner_text1"
         android:textSize="18sp" />
 
     <Space
@@ -33,8 +33,8 @@
         android:layout_weight="0"
         android:fontFamily="@font/germania_one_regular"
         android:gravity="center_horizontal"
-        android:text="PARTY"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        tools:text="PARTY" />
 
     <Space
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
         android:layout_weight="0"
         android:fontFamily="@font/germania_one_regular"
         android:gravity="center_horizontal"
-        android:text="have won the game"
+        android:text="@string/winner_text2"
         android:textSize="18sp" />
 
     <Space
@@ -64,6 +64,6 @@
         android:layout_weight="0"
         android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
-        android:text="Okay"
+        android:text="@string/winner_okay"
         android:textSize="18sp" />
 </LinearLayout>

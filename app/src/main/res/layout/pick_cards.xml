@@ -20,7 +20,7 @@
         android:gravity="center_horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="Select the card  you want to dismiss"
+        android:text="@string/pick_cards_title"
         android:textSize="18sp" />
 
     <Space
@@ -37,19 +37,22 @@
             android:id="@+id/pick_card1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:contentDescription="@string/pick_cards_card_description" />
 
         <ImageView
             android:id="@+id/pick_card2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:contentDescription="@string/pick_cards_card_description" />
 
         <ImageView
             android:id="@+id/pick_card3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:contentDescription="@string/pick_cards_card_description" />
 
     </LinearLayout>
 
@@ -67,7 +70,7 @@
         android:layout_weight="0"
         android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
-        android:text="Confirm"
+        android:text="@string/pick_cards_confirm"
         android:textSize="18sp" />
 
     <Space
@@ -84,7 +87,7 @@
         android:layout_weight="0"
         android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
-        android:text="Hide"
+        android:text="@string/action_dialog_hide"
         android:textSize="18sp" />
 
 </LinearLayout>

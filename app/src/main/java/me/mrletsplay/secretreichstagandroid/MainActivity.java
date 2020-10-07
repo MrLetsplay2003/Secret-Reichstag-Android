@@ -1,52 +1,34 @@
 package me.mrletsplay.secretreichstagandroid;
 
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.Window;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
-import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.os.Build;
-import android.os.Bundle;
-import android.provider.Settings;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
-
-import com.google.android.gms.common.util.SharedPreferencesUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.prefs.Preferences;
 
+import me.mrletsplay.secretreichstagandroid.fragment.GameFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.JoinRoomFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.MainMenuFragment;
-import me.mrletsplay.secretreichstagandroid.fragment.GameFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.RoomSettingsFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.SelectUsernameFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.SettingsFragment;
-import me.mrletsplay.secretreichstagandroid.ui.MovableFloatingActionButton;
-import me.mrletsplay.srweb.game.GameMode;
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.game.Room;
 import me.mrletsplay.srweb.game.RoomSettings;
@@ -61,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 	// TODO: test quit game
 	// TODO: test no duplicate votes on rejoin
 	// TODO: test custom drawing display size
-	// TODO: implement change view buttons (player list, chat/event log, menu)
 
 	private static Room room;
 	private static Player selfPlayer;
@@ -119,16 +100,11 @@ public class MainActivity extends AppCompatActivity {
 	private void loadAssets() {
 		new Thread(() -> {
 			List<Thread> ts = new ArrayList<>();
-			AtomicInteger i = new AtomicInteger(0);
 			AtomicBoolean errorOccurred = new AtomicBoolean();
 			for(GameAsset a : GameAsset.values()) {
 				Thread t = new Thread(() -> {
 					try {
-						boolean neededToDownload = a.load(getFilesDir());
-						i.incrementAndGet();
-						/*if(neededToDownload && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) { // To prevent toast stacking on older Android
-							runOnUiThread(() -> Toast.makeText(this, "Downloading assets (" + i.get() + "/" + GameAsset.values().length + ")", Toast.LENGTH_SHORT).show());
-						}*/
+						a.load(getCacheDir());
 					}catch(Exception e) {
 						errorOccurred.set(true);
 						e.printStackTrace();
@@ -310,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
 								.setTitle("Error")
 								.setMessage("Failed to connect to server:\n" + joinError.getMessage())
 								.setCancelable(true)
-								.setPositiveButton(R.string.okay, (dialog, id) -> dialog.cancel())
+								.setPositiveButton(R.string.error_okay, (dialog, id) -> dialog.cancel())
 								.create().show());
 						return;
 					}
@@ -330,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
 						.setTitle("Error")
 						.setMessage("Failed to connect to server:\n" + e.getMessage())
 						.setCancelable(true)
-						.setPositiveButton(R.string.okay, (dialog, id) -> dialog.cancel())
+						.setPositiveButton(R.string.error_okay, (dialog, id) -> dialog.cancel())
 						.create().show());
 			}
 		}).start();
@@ -462,7 +438,6 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	public void onBackPressed() {
 		if(currentFragment instanceof GameFragment) {
-			// TODO: show confirmation alert?
 			new AlertDialog.Builder(this)
 					.setTitle("Quit")
 					.setMessage("Do you really want to quit?")
