@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 	// TODO: test quit game
 	// TODO: test no duplicate votes on rejoin
 	// TODO: test custom drawing display size
-	// TODO: player list is in the wrong order
 
 	private static final boolean IS_BETA = true;
 
