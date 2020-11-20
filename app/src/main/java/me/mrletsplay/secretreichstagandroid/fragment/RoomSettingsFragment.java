@@ -22,8 +22,7 @@ public class RoomSettingsFragment extends Fragment {
 
 	private GameMode selectedGameMode;
 	private EditText
-			roomName,
-			maxPlayers;
+			roomName;
 
 	@Nullable
 	@Override
@@ -46,7 +45,6 @@ public class RoomSettingsFragment extends Fragment {
 		gameMode.setSelection(0);
 
 		roomName = v.findViewById(R.id.room_name);
-		maxPlayers = v.findViewById(R.id.max_players);
 
 		return v;
 	}
@@ -57,15 +55,6 @@ public class RoomSettingsFragment extends Fragment {
 
 	public String getRoomName() {
 		return roomName.getText().toString();
-	}
-
-	public int getMaxPlayers() {
-		if(maxPlayers.getText().length() == 0) return 0;
-		try {
-			return Integer.parseInt(maxPlayers.getText().toString());
-		}catch(NumberFormatException e) {
-			return 0;
-		}
 	}
 
 }

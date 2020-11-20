@@ -46,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
 	// TODO: test quit game
 	// TODO: test no duplicate votes on rejoin
 	// TODO: test custom drawing display size
+	// TODO: player list is in the wrong order
+
+	private static final boolean IS_BETA = true;
 
 	private static Room room;
 	private static Player selfPlayer;
@@ -232,11 +235,6 @@ public class MainActivity extends AppCompatActivity {
 			return;
 		}
 
-		if(fr.getMaxPlayers() < 5 || fr.getMaxPlayers() > 14) {
-			Snackbar.make(findViewById(R.id.root_container), "You need to enter a number of players between 5 and 14", Snackbar.LENGTH_LONG).show();
-			return;
-		}
-
 		roomSettings = new RoomSettings();
 		roomSettings.setMode(fr.getSelectedGameMode().name());
 		switch(fr.getSelectedGameMode()) {
@@ -252,7 +250,6 @@ public class MainActivity extends AppCompatActivity {
 				break;
 		}
 
-		roomSettings.setPlayerCount(fr.getMaxPlayers());
 		roomName = fr.getRoomName();
 		loadFragment(new SelectUsernameFragment());
 	}
@@ -302,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
 
 		new Thread(() -> {
 			try {
-				Networking.init(false);
+				Networking.init(IS_BETA);
 
 				Packet packet = Packet.of(connectPacket);
 				Networking.sendPacket(packet).thenAccept(p -> {

@@ -4,7 +4,6 @@ package me.mrletsplay.srweb.game;
 public class RoomSettings {
 
 	private String mode;
-	private int playerCount;
 	private int liberalCardCount;
 	private int communistCardCount;
 	private int fascistCardCount;
@@ -17,14 +16,6 @@ public class RoomSettings {
 
 	public String getMode() {
 		return this.mode;
-	}
-
-	public void setPlayerCount(int value) {
-		this.playerCount = value;
-	}
-
-	public int getPlayerCount() {
-		return this.playerCount;
 	}
 
 	public void setLiberalCardCount(int value) {

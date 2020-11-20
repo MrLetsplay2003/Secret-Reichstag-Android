@@ -135,6 +135,8 @@ public class GameFragment extends Fragment {
 				}else if(MainActivity.getLeader() != null && MainActivity.getLeader().getID().equals(player.getID())) {
 					int col = getColor("leader_" + r.getParty().name().toLowerCase());
 					tv.setTextColor(col);
+				}else {
+					tv.setTextColor(Color.WHITE);
 				}
 			}else {
 				tv.setTextColor(Color.WHITE);
@@ -228,8 +230,10 @@ public class GameFragment extends Fragment {
 	public void showStartDialogIfNeeded() {
 		// TODO: test start dialog after round ends
 		new Handler(Looper.getMainLooper()).post(() -> {
-			if(MainActivity.getRoom().getPlayers().size() == MainActivity.getRoom().getSettings().getPlayerCount()
+			if(!MainActivity.getRoom().isGameRunning()
+					&& MainActivity.getRoom().getPlayers().size() >= MainActivity.getRoom().getMode().getMinPlayers()
 					&& MainActivity.getSelfPlayer().getID().equals(MainActivity.getRoom().getPlayers().get(0).getID())) {
+				if(startGameAlert != null) return;
 				AlertDialog d = new AlertDialog.Builder(getContext())
 						.setMessage("Start the game?")
 						.setPositiveButton("START", (dialog, which) -> {
@@ -261,7 +265,7 @@ public class GameFragment extends Fragment {
 
 	public void removePlayer(Player player) {
 		playerList.post(() -> {
-			if(startGameAlert != null) {
+			if(startGameAlert != null && MainActivity.getRoom().getPlayers().size() < MainActivity.getRoom().getMode().getMinPlayers()) {
 				startGameAlert.cancel();
 				startGameAlert = null;
 			}
@@ -322,7 +326,7 @@ public class GameFragment extends Fragment {
 		playerList = v.findViewById(R.id.player_list);
 
 		playerList.post(() -> {
-			addOrUpdatePlayer(MainActivity.getSelfPlayer());
+			// addOrUpdatePlayer(MainActivity.getSelfPlayer());
 			for(Player pl : MainActivity.getRoom().getPlayers()) {
 				addOrUpdatePlayer(pl);
 			}

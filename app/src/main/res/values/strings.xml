@@ -10,8 +10,6 @@
     <string name="room_settings_title">Room Settings</string>
     <string name="room_settings_room_name_label">Room Name</string>
     <string name="room_settings_room_name_hint">Room Name</string>
-    <string name="room_settings_max_players_label">Max Players</string>
-    <string name="room_settings_max_players_hint">Max Players</string>
     <string name="room_settings_game_mode_label">Game Mode</string>
     <string name="room_settings_create_room">Create Room</string>
 
