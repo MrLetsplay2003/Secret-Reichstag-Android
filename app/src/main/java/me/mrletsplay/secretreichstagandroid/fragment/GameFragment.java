@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,6 +43,7 @@ import me.mrletsplay.srweb.game.state.GameParty;
 import me.mrletsplay.srweb.game.state.GameRole;
 import me.mrletsplay.srweb.game.state.GameState;
 import me.mrletsplay.srweb.packet.Packet;
+import me.mrletsplay.srweb.packet.impl.PacketClientChatMessage;
 import me.mrletsplay.srweb.packet.impl.PacketClientStartGame;
 
 public class GameFragment extends Fragment {
@@ -58,6 +60,7 @@ public class GameFragment extends Fragment {
 	private LinearLayout playerList;
 	private TextView eventLog;
 	private ScrollView eventLogScroll;
+	private EditText chatInput;
 	private TextView menuRoomID;
 
 	@Override
@@ -315,6 +318,17 @@ public class GameFragment extends Fragment {
 
 		eventLogScroll = v.findViewById(R.id.chat_scroll);
 		eventLogScroll.post(() -> eventLogScroll.fullScroll(View.FOCUS_DOWN));
+
+		chatInput = v.findViewById(R.id.chat_input);
+	}
+
+	public void sendChat() {
+		String txt = chatInput.getText().toString().trim();
+		if(txt.isEmpty()) return;
+		PacketClientChatMessage cm = new PacketClientChatMessage();
+		cm.setMessage(txt);
+		Networking.sendPacket(Packet.of(cm));
+		chatInput.getText().clear();
 	}
 
 	public void loadPlayerList() {

@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 	// TODO: test no duplicate votes on rejoin
 	// TODO: test custom drawing display size
 
-	private static final boolean IS_BETA = true;
+	private static final boolean IS_BETA = false;
 
 	private static Room room;
 	private static Player selfPlayer;
@@ -220,6 +220,10 @@ public class MainActivity extends AppCompatActivity {
 
 	public void chat(View v) {
 		((GameFragment) currentFragment).loadChat();
+	}
+
+	public void chatSend(View v) {
+		((GameFragment) currentFragment).sendChat();
 	}
 
 	public void playerList(View v) {

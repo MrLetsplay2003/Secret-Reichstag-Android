@@ -26,7 +26,7 @@
     <string name="error_okay">Okay</string>
 
     <string name="event_log_start">The event log starts here</string>
-    <string name="chat_disabled">Chat is disabled for now</string>
+    <string name="chat">Chat</string>
 
     <string name="action_dialog_hide">Hide</string>
 
@@ -61,4 +61,5 @@
 
     <string name="card_active">card_active</string>
     <string name="card_index">card_index</string>
+    <string name="chat_send">Send</string>
 </resources>
