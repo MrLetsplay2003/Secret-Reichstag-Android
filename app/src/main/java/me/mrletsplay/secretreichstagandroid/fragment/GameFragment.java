@@ -125,6 +125,8 @@ public class GameFragment extends Fragment {
 				playerElements.put(player.getID(), ll);
 			}
 
+			ll.setVisibility(View.INVISIBLE); // We need to make it invisible at first because Android does weird stuff and briefly shows some kind of box at the end of our TextView otherwise
+
 			TextView tv = (TextView) ll.getChildAt(0);
 			tv.setPadding(10, 5, 10, 5);
 
@@ -216,6 +218,7 @@ public class GameFragment extends Fragment {
 				}
 			}
 
+			ll.setVisibility(View.VISIBLE);
 			playerList.invalidate();
 		});
 	}
@@ -340,7 +343,6 @@ public class GameFragment extends Fragment {
 		playerList = v.findViewById(R.id.player_list);
 
 		playerList.post(() -> {
-			// addOrUpdatePlayer(MainActivity.getSelfPlayer());
 			for(Player pl : MainActivity.getRoom().getPlayers()) {
 				addOrUpdatePlayer(pl);
 			}

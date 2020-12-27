@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import me.mrletsplay.secretreichstagandroid.fragment.CreditsFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.GameFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.JoinRoomFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.MainMenuFragment;
@@ -295,6 +296,14 @@ public class MainActivity extends AppCompatActivity {
 		}
 
 		joinServer(con);
+	}
+
+	public void credits(View v) {
+		loadFragment(new CreditsFragment());
+	}
+
+	public void creditsBack(View v) {
+		loadFragment(new MainMenuFragment());
 	}
 
 	private void joinServer(PacketClientConnect connectPacket) {

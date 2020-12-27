@@ -19,11 +19,11 @@
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
-        app:srcCompat="@drawable/ic_secret_hitler_logo" />
+        app:srcCompat="@drawable/ic_secret_reichstag_logo" />
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:layout_weight="0" />
 
     <Button
@@ -85,6 +85,24 @@
         android:fontFamily="@font/germania_one_regular"
         android:onClick="settings"
         android:text="@string/main_menu_settings"
+        android:textSize="18sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_weight="0" />
+
+    <Button
+        android:id="@+id/credits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="0"
+        android:background="@drawable/round_shape"
+        android:fontFamily="@font/germania_one_regular"
+        android:onClick="credits"
+        android:text="@string/main_menu_credits"
         android:textSize="18sp" />
 
 </LinearLayout>
