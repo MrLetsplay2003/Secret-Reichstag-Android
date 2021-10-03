@@ -27,6 +27,7 @@ public class RoomSettingsFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+		if(container != null) container.removeAllViews();
 		View v = inflater.inflate(R.layout.room_settings, container, false);
 
 		Spinner gameMode = v.findViewById(R.id.game_mode);

@@ -1,6 +1,5 @@
 package me.mrletsplay.secretreichstagandroid;
 
-import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -290,6 +289,7 @@ public class MainActivity extends AppCompatActivity {
 			con.setCreateRoom(true);
 			con.setRoomName(roomName);
 			con.setRoomSettings(roomSettings);
+			roomSettings = null;
 		}else {
 			con.setCreateRoom(false);
 			con.setRoomID(roomID);

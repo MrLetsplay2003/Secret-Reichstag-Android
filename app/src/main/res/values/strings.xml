@@ -26,7 +26,7 @@
 
     <string name="credits_label">Credits</string>
     <string name="credits_back">Back</string>
-    <string name="credits_text">\"Secret Reichstag\" is a modified version of the game \"Secret Hitler\" by Goat, Wolf, &amp; Cabbage LLC\nAll credit for the original game goes to them\n<a href="https://secrethitler.com">Original Game Website</a>\n\nLicense: CC BY-NC-SA 4.0\n\nThere\'s also a <a href="https://sr.graphite-official.com/play">web version</a> available for playing the game on your PC\n\nDeveloped by: <a href="https://github.com/MrLetsplay2003">MrLetsplay2003</a>\nSource Code: <a href="https://github.com/MrLetsplay2003/Secret-Reichstag-Android">GitHub</a>\n\nApp Icon: <a href="https://github.com/Endergame15">Endergame15</a>\nIn-game Icons: Palme11100\n\nSpecial thanks to:\nAkito123321\nTheArrayser\n\nSupported by <a href="https://graphite-official.com">Graphite</a></string>
+    <string name="credits_text">\"Secret Reichstag\" is a modified version of the game \"Secret Hitler\" by Goat, Wolf, &amp; Cabbage LLC\nAll credit for the original game goes to them\n<a href="https://secrethitler.com">Original Game Website</a>\n\nLicense: CC BY-NC-SA 4.0\n\nThere\'s also a <a href="https://sr.graphite-official.com/play">web version</a> available for playing the game on your PC\n\nDeveloped by: <a href="https://github.com/MrLetsplay2003">MrLetsplay2003</a>\nSource Code: <a href="https://github.com/MrLetsplay2003/Secret-Reichstag-Android">GitHub</a>\n\nApp Icon: <a href="https://github.com/Endergame15">Endergame15</a>\nIn-game Icons: Palme11100\n\nSpecial thanks to:\nAkito123321\nBlobert\nTheArrayser\n\nSupported by <a href="https://graphite-official.com">Graphite</a></string>
 
     <string name="error_okay">Okay</string>
 
