@@ -235,6 +235,7 @@ public class GameFragment extends Fragment {
 
 	public void showStartDialogIfNeeded() {
 		// TODO: test start dialog after round ends
+		System.out.println("SHOW START DIALOG");
 		new Handler(Looper.getMainLooper()).post(() -> {
 			if(!MainActivity.getRoom().isGameRunning()
 					&& MainActivity.getRoom().getPlayers().size() >= MainActivity.getRoom().getMode().getMinPlayers()
@@ -244,6 +245,7 @@ public class GameFragment extends Fragment {
 						.setMessage("Start the game?")
 						.setPositiveButton("START", (dialog, which) -> {
 							dialog.cancel();
+							startGameAlert = null;
 							Networking.sendPacket(Packet.of(new PacketClientStartGame()));
 						})
 						.setCancelable(false)

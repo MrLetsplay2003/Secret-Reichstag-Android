@@ -353,6 +353,7 @@ public class DefaultPacketListener implements PacketListener {
 			MainActivity.setSelfVoted(false);
 			MainActivity.setTeammates(null);
 			MainActivity.setLeader(null);
+			MainActivity.getRoom().setGameRunning(false);
 			if(currentAlert != null) currentAlert.dismiss();
 			if(currentSnackbar != null) currentSnackbar.dismiss();
 			MainActivity.setPreviousRoles(((PacketServerStopGame) d).getRoles());
