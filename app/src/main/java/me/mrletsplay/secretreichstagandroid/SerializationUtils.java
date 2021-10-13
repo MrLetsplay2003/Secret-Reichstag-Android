@@ -23,12 +23,8 @@ public class SerializationUtils {
 			Iterator<String> k = obj.keys();
 			while(k.hasNext()) {
 				String key = k.next();
-				Field f;
-				try {
-					f = t.getClass().getDeclaredField(key);
-				}catch(NoSuchFieldException e) {
-					continue;
-				}
+				Field f = getField(t.getClass(), key);
+				if(f == null) continue;
 				f.setAccessible(true);
 				if(obj.isNull(key)) {
 					f.set(t, null);
@@ -51,6 +47,18 @@ public class SerializationUtils {
 		}catch(JSONException | ClassNotFoundException | IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	private static Field getField(Class<?> clazz, String fieldName) {
+		while(clazz != Object.class) {
+			try {
+				return clazz.getDeclaredField(fieldName);
+			}catch(NoSuchFieldException e) {
+				clazz = clazz.getSuperclass();
+			}
+		}
+
+		return null;
 	}
 
 	public static <T> List<T> castList(JSONArray arr) {
