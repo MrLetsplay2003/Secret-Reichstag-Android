@@ -234,8 +234,6 @@ public class GameFragment extends Fragment {
 	}
 
 	public void showStartDialogIfNeeded() {
-		// TODO: test start dialog after round ends
-		System.out.println("SHOW START DIALOG");
 		new Handler(Looper.getMainLooper()).post(() -> {
 			if(!MainActivity.getRoom().isGameRunning()
 					&& MainActivity.getRoom().getPlayers().size() >= MainActivity.getRoom().getMode().getMinPlayers()
@@ -289,7 +287,6 @@ public class GameFragment extends Fragment {
 
 	public void updateAll() {
 		if(!loadFinished) return;
-		System.out.println("UPDATE ALL");
 		new Handler(Looper.getMainLooper()).post(() -> {
 			for(Player pl : MainActivity.getRoom().getPlayers()) {
 				addOrUpdatePlayer(pl);

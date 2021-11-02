@@ -5,11 +5,27 @@
       <map>
         <entry key="../../../../../../../layout/custom_preview.xml" value="0.40208333333333335" />
         <entry key="app/src/main/res/drawable/round_shape.xml" value="0.3776041666666667" />
+        <entry key="app/src/main/res/layout/advanced_room_settings.xml" value="0.3614583333333333" />
+        <entry key="app/src/main/res/layout/chancellor_item.xml" value="0.3614583333333333" />
+        <entry key="app/src/main/res/layout/chat.xml" value="0.3614583333333333" />
+        <entry key="app/src/main/res/layout/container.xml" value="0.3614583333333333" />
+        <entry key="app/src/main/res/layout/credits.xml" value="0.3614583333333333" />
+        <entry key="app/src/main/res/layout/draw_cards.xml" value="0.3614583333333333" />
+        <entry key="app/src/main/res/layout/game_layout.xml" value="0.3614583333333333" />
+        <entry key="app/src/main/res/layout/ingame_menu.xml" value="0.37395833333333334" />
         <entry key="app/src/main/res/layout/inspect_player.xml" value="0.2015625" />
         <entry key="app/src/main/res/layout/join_room.xml" value="0.2015625" />
+        <entry key="app/src/main/res/layout/main_menu.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/pick_cards.xml" value="0.3614583333333333" />
+        <entry key="app/src/main/res/layout/pick_player.xml" value="0.3614583333333333" />
+        <entry key="app/src/main/res/layout/player_list.xml" value="0.3614583333333333" />
         <entry key="app/src/main/res/layout/room_settings.xml" value="0.2015625" />
-        <entry key="app/src/main/res/layout/select_username.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/select_username.xml" value="0.33" />
         <entry key="app/src/main/res/layout/spinner_item.xml" value="0.2015625" />
+        <entry key="app/src/main/res/layout/veto.xml" value="0.3614583333333333" />
+        <entry key="app/src/main/res/layout/vote.xml" value="0.3614583333333333" />
+        <entry key="app/src/main/res/layout/winner.xml" value="0.3614583333333333" />
+        <entry key="app/src/main/res/xml/settings.xml" value="0.3614583333333333" />
       </map>
     </option>
   </component>

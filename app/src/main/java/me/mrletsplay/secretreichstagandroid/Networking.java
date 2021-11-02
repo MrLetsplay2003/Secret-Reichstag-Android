@@ -49,8 +49,6 @@ public class Networking {
 						return;
 					}
 
-					System.out.println(obj.toString(2));
-
 					Packet packet = SerializationUtils.cast(obj);
 					if(packet.getReferrerID() != null) {
 						Iterator<Packet> pI = packetQueue.keySet().iterator();

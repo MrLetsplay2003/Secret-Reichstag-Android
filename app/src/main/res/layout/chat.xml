@@ -27,7 +27,8 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:text="@string/event_log_start"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
         </LinearLayout>
     </ScrollView>
 
@@ -47,7 +48,8 @@
             android:fontFamily="@font/germania_one_regular"
             android:hint="@string/chat"
             android:inputType="textPersonName"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="20sp" />
 
         <Button
             android:layout_width="80dp"
@@ -55,7 +57,7 @@
             android:fontFamily="@font/germania_one_regular"
             android:onClick="chatSend"
             android:text="@string/chat_send"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -14,6 +14,6 @@
         android:fontFamily="@font/germania_one_regular"
         android:gravity="center_horizontal"
         android:textColor="@android:color/white"
-        android:textSize="24sp"
-        tools:text="ROOM ID" />
+        android:textSize="40sp"
+        tools:text="ROOM ID: 000000" />
 </LinearLayout>

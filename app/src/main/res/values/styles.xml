@@ -40,7 +40,7 @@
     </style>
 
     <style name="SettingsSwitch" parent="Preference.SwitchPreferenceCompat">
-
+        <item name="switchTextAppearance">@color/role_communist</item>
     </style>
 
 </resources>

@@ -66,4 +66,9 @@
         android:fontFamily="@font/germania_one_regular"
         android:text="@string/winner_okay"
         android:textSize="18sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_weight="0" />
 </LinearLayout>
