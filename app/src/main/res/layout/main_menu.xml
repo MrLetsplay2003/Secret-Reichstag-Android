@@ -36,7 +36,7 @@
         android:fontFamily="@font/germania_one_regular"
         android:onClick="newRoom"
         android:text="@string/main_menu_new_room"
-        android:textSize="18sp" />
+        android:textSize="25sp" />
 
     <Space
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
         android:fontFamily="@font/germania_one_regular"
         android:onClick="joinRoom"
         android:text="@string/main_menu_join_room"
-        android:textSize="18sp" />
+        android:textSize="25sp" />
 
     <Space
         android:layout_width="match_parent"
@@ -69,7 +69,7 @@
         android:fontFamily="@font/germania_one_regular"
         android:onClick="rejoinRoom"
         android:text="@string/main_menu_rejoin_room"
-        android:textSize="18sp" />
+        android:textSize="25sp" />
 
     <Space
         android:layout_width="match_parent"
@@ -85,7 +85,7 @@
         android:fontFamily="@font/germania_one_regular"
         android:onClick="settings"
         android:text="@string/main_menu_settings"
-        android:textSize="18sp" />
+        android:textSize="25sp" />
 
     <Space
         android:layout_width="match_parent"
@@ -103,6 +103,6 @@
         android:fontFamily="@font/germania_one_regular"
         android:onClick="credits"
         android:text="@string/main_menu_credits"
-        android:textSize="18sp" />
+        android:textSize="25sp" />
 
 </LinearLayout>

@@ -11,14 +11,13 @@
 
     <PreferenceCategory android:title="Server">
 
-        <EditTextPreference
-            android:defaultValue="sr.graphite-official.com"
-            android:key="server_host"
-            android:title="Server Host" />
+        <ListPreference
+            android:defaultValue="1"
+            android:key="server"
+            android:title="Select Server"
+            android:summary="An app restart is required for the new server to take effect" />
 
-        <EditTextPreference
-            android:defaultValue="23456"
-            android:key="server_port"
-            android:title="Server Port" />
+        <Preference
+            android:layout="@layout/preferences_add_server"/>
     </PreferenceCategory>
 </PreferenceScreen>

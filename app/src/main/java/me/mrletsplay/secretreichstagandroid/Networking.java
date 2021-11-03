@@ -1,10 +1,16 @@
 package me.mrletsplay.secretreichstagandroid;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import androidx.preference.PreferenceManager;
+
 import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketFactory;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -21,9 +27,23 @@ public class Networking {
 	private static PacketListener listener;
 	private static WebSocket webSocket;
 
-	public static void init(boolean isBeta) throws Exception {
-		System.out.println("INIT " + (isBeta ? "BETA" : "NON-BETA") + " NETWORKING");
-		webSocket = new WebSocketFactory().createSocket(isBeta ? "ws://192.168.0.13:34642" : "ws://repo.graphite-official.com:34642");
+	public static void init(Context context) throws Exception {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		String selectedServer = prefs.getString("server", "Official Server");
+		JSONArray arr = new JSONArray(prefs.getString("servers", "[]"));
+
+		String srvURL = null;
+		for(int i = 0; i < arr.length(); i++) {
+			JSONObject o = arr.getJSONObject(i);
+			if(o.getString("name").equals(selectedServer)) {
+				srvURL = o.getString("url");
+				break;
+			}
+		}
+
+		if(srvURL == null) srvURL = "ws://repo.graphite-official.com:34642";
+
+		webSocket = new WebSocketFactory().createSocket(srvURL);
 		webSocket.addListener(new WebSocketAdapter() {
 
 			@Override

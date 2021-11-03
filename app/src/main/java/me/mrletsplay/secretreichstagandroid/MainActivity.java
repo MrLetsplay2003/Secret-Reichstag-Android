@@ -1,28 +1,47 @@
 package me.mrletsplay.secretreichstagandroid;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.widget.ListViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import me.mrletsplay.secretreichstagandroid.fragment.CreditsFragment;
@@ -46,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
 	// TODO: test quit game
 	// TODO: test no duplicate votes on rejoin
 	// TODO: test custom drawing display size
-
-	private static final boolean IS_BETA = false;
 
 	private static Room room;
 	private static Player selfPlayer;
@@ -306,12 +323,99 @@ public class MainActivity extends AppCompatActivity {
 		loadFragment(new MainMenuFragment());
 	}
 
+	public void addServer(View v) {
+		View view = getLayoutInflater().inflate(R.layout.add_server, null);
+		EditText name = view.findViewById(R.id.add_server_name);
+		EditText url = view.findViewById(R.id.add_server_url);
+		new AlertDialog.Builder(this)
+				.setTitle("Add Server")
+				.setView(view)
+				.setPositiveButton("Add", (dialog, which) -> {
+					String n = name.getText().toString().trim();
+					String u = url.getText().toString().trim();
+					if(n.isEmpty() || u.isEmpty()) {
+						new AlertDialog.Builder(this)
+								.setTitle("Error")
+								.setMessage("You need to input name, host, and port")
+								.setPositiveButton("Okay", null)
+								.show();
+						return;
+					}
+
+					if(!u.startsWith("ws://") && !u.startsWith("wss://")) {
+						new AlertDialog.Builder(this)
+								.setTitle("Error")
+								.setMessage("The server URL must start with ws:// or wss://")
+								.setPositiveButton("Okay", null)
+								.show();
+						return;
+					}
+
+					SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+					try {
+						JSONArray arr = new JSONArray(prefs.getString("servers", "[]"));
+
+						if(n.equals("Official Server")) {
+							new AlertDialog.Builder(this)
+									.setTitle("Error")
+									.setMessage("A server with that name already exists")
+									.setPositiveButton("Okay", null)
+									.show();
+							return;
+						}
+
+						for(int i = 0; i < arr.length(); i++) {
+							if(arr.getJSONObject(i).getString("name").equals(n)) {
+								new AlertDialog.Builder(this)
+										.setTitle("Error")
+										.setMessage("A server with that name already exists")
+										.setPositiveButton("Okay", null)
+										.show();
+								return;
+							}
+						}
+
+						JSONObject srv = new JSONObject();
+						srv.put("name", n);
+						srv.put("url", u);
+						arr.put(srv);
+						prefs.edit().putString("servers", arr.toString()).apply();
+					} catch (JSONException e) {
+						e.printStackTrace();
+					}
+				})
+				.setNegativeButton("Cancel", null)
+				.show();
+	}
+
+	public void removeServer(View v) throws JSONException {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		JSONArray arr = new JSONArray(prefs.getString("servers", "[]"));
+		View view = getLayoutInflater().inflate(R.layout.remove_server, null);
+		ListView servers = view.findViewById(R.id.servers_list);
+		List<String> els = new ArrayList<>();
+		for(int i = 0; i < arr.length(); i++) {
+			els.add(arr.getJSONObject(i).getString("name"));
+		}
+		servers.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_multiple_choice, els));
+		new AlertDialog.Builder(this)
+				.setTitle("Remove Servers")
+				.setView(view)
+				.setPositiveButton("Remove", (dialog, which) -> {
+					for(int i = arr.length() - 1; i >= 0; i--) {
+						if(servers.getCheckedItemPositions().get(i)) arr.remove(i);
+					}
+					prefs.edit().putString("servers", arr.toString()).apply();
+				})
+				.show();
+	}
+
 	private void joinServer(PacketClientConnect connectPacket) {
 		eventLog = new ArrayList<>();
 
 		new Thread(() -> {
 			try {
-				Networking.init(IS_BETA);
+				Networking.init(this);
 
 				Packet packet = Packet.of(connectPacket);
 				Networking.sendPacket(packet).thenAccept(p -> {

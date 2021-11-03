@@ -32,7 +32,8 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="@string/credits_label"
-            android:textColor="@color/text" />
+            android:textColor="@color/text"
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/credits_text_view"
@@ -61,7 +62,7 @@
         android:fontFamily="@font/germania_one_regular"
         android:onClick="creditsBack"
         android:text="@string/credits_back"
-        android:textSize="18sp" />
+        android:textSize="25sp" />
 
     <Space
         android:layout_width="match_parent"

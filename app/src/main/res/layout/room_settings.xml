@@ -34,7 +34,7 @@
             android:paddingRight="5dp"
             android:text="@string/room_settings_title"
             android:textColor="@color/text"
-            android:textSize="18sp" />
+            android:textSize="25sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -46,7 +46,8 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="@string/room_settings_room_name_label"
-            android:textColor="@color/text" />
+            android:textColor="@color/text"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/room_name"
@@ -59,7 +60,8 @@
             android:fontFamily="@font/germania_one_regular"
             android:hint="@string/room_settings_room_name_hint"
             android:importantForAutofill="no"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textSize="20sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -76,7 +78,8 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="@string/room_settings_game_mode_label"
-            android:textColor="@color/text" />
+            android:textColor="@color/text"
+            android:textSize="20sp" />
 
         <Spinner
             android:id="@+id/game_mode"
@@ -102,7 +105,7 @@
         android:fontFamily="@font/germania_one_regular"
         android:onClick="roomSettingsConfirm"
         android:text="@string/room_settings_create_room"
-        android:textSize="18sp" />
+        android:textSize="25sp" />
 
     <Space
         android:layout_width="match_parent"

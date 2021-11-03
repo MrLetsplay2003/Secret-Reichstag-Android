@@ -30,7 +30,8 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="@string/join_room_id_label"
-            android:textColor="@color/text" />
+            android:textColor="@color/text"
+            android:textSize="20sp" />
 
         <EditText
             android:id="@+id/room_id"
@@ -38,11 +39,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
+            android:autofillHints="no"
             android:ems="10"
             android:fontFamily="@font/germania_one_regular"
             android:hint="@string/join_room_id_hint"
             android:inputType="number"
-            android:autofillHints="no" />
+            android:textSize="20sp" />
     </LinearLayout>
 
     <Space
@@ -59,7 +61,7 @@
         android:fontFamily="@font/germania_one_regular"
         android:onClick="roomIDConfirm"
         android:text="@string/join_room_confirm"
-        android:textSize="18sp" />
+        android:textSize="25sp" />
 
     <Space
         android:layout_width="match_parent"
