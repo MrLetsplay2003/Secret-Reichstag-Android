@@ -14,8 +14,7 @@
         <ListPreference
             android:defaultValue="1"
             android:key="server"
-            android:title="Select Server"
-            android:summary="An app restart is required for the new server to take effect" />
+            android:title="Select Server" />
 
         <Preference
             android:layout="@layout/preferences_add_server"/>
