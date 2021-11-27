@@ -19,8 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +61,7 @@ public class AdvancedRoomSettingsFragment extends Fragment {
 
 			new AlertDialog.Builder(getContext())
 					.setView(elv)
-					.setPositiveButton("Okay", null)
+					.setPositiveButton(R.string.okay, null)
 					.show();
 		});
 
@@ -73,18 +71,19 @@ public class AdvancedRoomSettingsFragment extends Fragment {
 			Map<String, RoomSettings> presets = RoomSettingsDefaults.getDefaults(GameMode.valueOf(roomSettings.getRoomSettings().getMode()));
 			List<String> pr = new ArrayList<>(presets.keySet());
 			ArrayAdapter<String> ad = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, pr);
+			lv.setAdapter(ad);
+
+			AlertDialog d = new AlertDialog.Builder(getContext())
+					.setView(lv)
+					.setNegativeButton(R.string.cancel, null)
+					.show();
+
 			lv.setOnItemClickListener((parent, view, position, id) -> {
 				String preset = pr.get(position);
 				RoomSettings p = presets.get(preset);
 				load(p);
-				System.out.println("LOAD PRESET: " + preset);
+				d.dismiss();
 			});
-			lv.setAdapter(ad);
-
-			new AlertDialog.Builder(getContext())
-					.setView(lv)
-					.setPositiveButton("Okay", null)
-					.show();
 		});
 
 		return v;

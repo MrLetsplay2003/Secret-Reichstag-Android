@@ -47,7 +47,7 @@
                 android:fontFamily="@font/germania_one_regular"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:text="Actions"
+                android:text="@string/advanced_actions_title"
                 android:textColor="@color/text"
                 android:textSize="20sp" />
 
@@ -58,7 +58,7 @@
                 android:background="@drawable/round_shape"
                 android:backgroundTint="@color/reichstag"
                 android:fontFamily="@font/germania_one_regular"
-                android:text="Customize Actions"
+                android:text="@string/advanced_actions_customize"
                 android:textSize="20sp" />
 
             <Space
@@ -71,7 +71,7 @@
                 android:fontFamily="@font/germania_one_regular"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:text="Cards"
+                android:text="@string/advanced_cards_title"
                 android:textColor="@color/text"
                 android:textSize="20sp" />
 
@@ -104,7 +104,7 @@
                 android:background="@drawable/round_shape"
                 android:backgroundTint="@color/reichstag"
                 android:fontFamily="@font/germania_one_regular"
-                android:text="Load Defaults"
+                android:text="@string/advanced_load_defaults"
                 android:textSize="20sp" />
         </LinearLayout>
     </ScrollView>

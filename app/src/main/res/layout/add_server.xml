@@ -7,10 +7,6 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="25dp" />
-
     <EditText
         android:id="@+id/add_server_name"
         android:layout_width="match_parent"
@@ -20,7 +16,7 @@
         android:ems="10"
         android:inputType="text"
         android:autofillHints="none"
-        android:hint="Server Name" />
+        android:hint="@string/add_server_name" />
 
     <EditText
         android:id="@+id/add_server_url"
@@ -31,5 +27,5 @@
         android:ems="10"
         android:inputType="textUri"
         android:autofillHints="none"
-        android:hint="Server URL" />
+        android:hint="@string/add_server_url" />
 </LinearLayout>

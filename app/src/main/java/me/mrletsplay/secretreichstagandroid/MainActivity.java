@@ -1,7 +1,6 @@
 package me.mrletsplay.secretreichstagandroid;
 
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -301,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
 						new AlertDialog.Builder(this)
 								.setTitle("Error")
 								.setMessage("You need to input name, host, and port")
-								.setPositiveButton("Okay", null)
+								.setPositiveButton(R.string.okay, null)
 								.show();
 						return;
 					}
@@ -310,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
 						new AlertDialog.Builder(this)
 								.setTitle("Error")
 								.setMessage("The server URL must start with ws:// or wss://")
-								.setPositiveButton("Okay", null)
+								.setPositiveButton(R.string.okay, null)
 								.show();
 						return;
 					}
@@ -323,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
 							new AlertDialog.Builder(this)
 									.setTitle("Error")
 									.setMessage("A server with that name already exists")
-									.setPositiveButton("Okay", null)
+									.setPositiveButton(R.string.okay, null)
 									.show();
 							return;
 						}
@@ -333,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
 								new AlertDialog.Builder(this)
 										.setTitle("Error")
 										.setMessage("A server with that name already exists")
-										.setPositiveButton("Okay", null)
+										.setPositiveButton(R.string.okay, null)
 										.show();
 								return;
 							}
@@ -348,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
 						e.printStackTrace();
 					}
 				})
-				.setNegativeButton("Cancel", null)
+				.setNegativeButton(R.string.cancel, null)
 				.show();
 	}
 
@@ -390,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
 								.setTitle("Error")
 								.setMessage("Failed to connect to server:\n" + joinError.getMessage())
 								.setCancelable(true)
-								.setPositiveButton(R.string.error_okay, (dialog, id) -> dialog.cancel())
+								.setPositiveButton(R.string.okay, (dialog, id) -> dialog.cancel())
 								.create().show());
 						return;
 					}
@@ -412,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
 						.setTitle("Error")
 						.setMessage("Failed to connect to server:\n" + e.getMessage())
 						.setCancelable(true)
-						.setPositiveButton(R.string.error_okay, (dialog, id) -> dialog.cancel())
+						.setPositiveButton(R.string.okay, (dialog, id) -> dialog.cancel())
 						.create().show());
 			}
 		}).start();
