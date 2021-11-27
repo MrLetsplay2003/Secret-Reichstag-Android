@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,14 +16,20 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Arrays;
 
+import me.mrletsplay.secretreichstagandroid.ExtendedRoomSettings;
 import me.mrletsplay.secretreichstagandroid.R;
 import me.mrletsplay.srweb.game.GameMode;
+import me.mrletsplay.srweb.game.RoomSettings;
 
 public class RoomSettingsFragment extends Fragment {
 
+	private ExtendedRoomSettings roomSettings;
 	private GameMode selectedGameMode;
-	private EditText
-			roomName;
+	private EditText roomName;
+
+	public RoomSettingsFragment(ExtendedRoomSettings roomSettings) {
+		this.roomSettings = roomSettings;
+	}
 
 	@Nullable
 	@Override
@@ -50,12 +57,24 @@ public class RoomSettingsFragment extends Fragment {
 		return v;
 	}
 
-	public GameMode getSelectedGameMode() {
-		return selectedGameMode;
-	}
+	public boolean applySettings(boolean strict) {
+		String name = roomName.getText().toString().trim();
 
-	public String getRoomName() {
-		return roomName.getText().toString();
+		if(name.isEmpty()) {
+			if(strict) {
+				Toast.makeText(getContext(), "You need to enter a room name", Toast.LENGTH_LONG).show();
+				return false;
+			}
+		}else {
+			roomSettings.setRoomName(name);
+		}
+
+		RoomSettings r = roomSettings.getRoomSettings();
+		r.setMode(selectedGameMode.name());
+		if(r.getLiberalCardCount() == 0) r.setLiberalCardCount(selectedGameMode == GameMode.SECRET_REICHSTAG ? 9 : 6);
+		if(r.getFascistCardCount() == 0) r.setFascistCardCount(11);
+		if(r.getCommunistCardCount() == 0) r.setCommunistCardCount(11);
+		return true;
 	}
 
 }

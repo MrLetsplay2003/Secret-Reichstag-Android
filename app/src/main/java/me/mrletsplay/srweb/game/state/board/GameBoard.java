@@ -8,6 +8,7 @@ public class GameBoard {
 	private int numCards;
 	private int maxCards;
 	private List<GameBoardActionField> actionFields;
+	private boolean isCustom;
 
 	public GameBoard() {}
 
@@ -21,6 +22,10 @@ public class GameBoard {
 
 	public List<GameBoardActionField> getActionFields() {
 		return this.actionFields;
+	}
+
+	public boolean isCustom() {
+		return this.isCustom;
 	}
 
 }

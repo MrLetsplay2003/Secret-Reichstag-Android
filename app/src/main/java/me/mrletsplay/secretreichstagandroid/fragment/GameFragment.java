@@ -3,6 +3,7 @@ package me.mrletsplay.secretreichstagandroid.fragment;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.PictureDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -265,7 +266,8 @@ public class GameFragment extends Fragment {
 		llp.gravity = Gravity.CENTER_VERTICAL;
 		iv.setLayoutParams(llp);
 		iv.setAdjustViewBounds(true);
-		iv.setImageBitmap(icon.getBitmap());
+		iv.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+		iv.setImageDrawable(new PictureDrawable(icon.getSVG().renderToPicture()));
 		ll.addView(iv);
 	}
 

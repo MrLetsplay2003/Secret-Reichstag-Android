@@ -1,16 +1,12 @@
 package me.mrletsplay.secretreichstagandroid.fragment;
 
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -23,7 +19,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import java8.util.stream.IntStream;
 import me.mrletsplay.secretreichstagandroid.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
@@ -31,11 +26,6 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 	@Override
 	public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
 		setPreferencesFromResource(R.xml.settings, rootKey);
-
-		EditTextPreference port = findPreference("server_port");
-		if(port != null) {
-			port.setOnBindEditTextListener(editText -> editText.setInputType(InputType.TYPE_CLASS_NUMBER));
-		}
 	}
 
 	@Override

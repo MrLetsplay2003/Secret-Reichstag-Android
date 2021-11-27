@@ -1,11 +1,15 @@
 package me.mrletsplay.secretreichstagandroid;
 
+import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import androidx.preference.PreferenceManager;
 
+import com.caverock.androidsvg.SVG;
+import com.caverock.androidsvg.SVGParseException;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,50 +19,57 @@ import java.net.URL;
 
 public enum GameAsset {
 
-	LIBERAL_ARTICLE("article/liberal.png"),
-	FASCIST_ARTICLE("article/fascist.png"),
-	COMMUNIST_ARTICLE("article/communist.png"),
-	ARTICLE_BACK("article/back.png"),
+	LIBERAL_ARTICLE("article/liberal.svg"),
+	FASCIST_ARTICLE("article/fascist.svg"),
+	COMMUNIST_ARTICLE("article/communist.svg"),
+	ARTICLE_BACK("article/back.svg"),
 
-	ACTION_EXAMINE_TOP_CARDS_FASCIST("icon/icon-top-cards-f.png"),
-	ACTION_EXAMINE_TOP_CARDS_COMMUNIST("icon/icon-top-cards-c.png"),
-	ACTION_EXAMINE_TOP_CARDS_OTHER_FASCIST("icon/icon-top-cards-other-f.png"),
-	ACTION_EXAMINE_TOP_CARDS_OTHER_COMMUNIST("icon/icon-top-cards-other-c.png"),
-	ACTION_KILL_PLAYER_FASCIST("icon/icon-kill-f.png"),
-	ACTION_KILL_PLAYER_COMMUNIST("icon/icon-kill-c.png"),
-	ACTION_PICK_PRESIDENT_FASCIST("icon/icon-pick-president-f.png"),
-	ACTION_PICK_PRESIDENT_COMMUNIST("icon/icon-pick-president-c.png"),
-	ACTION_INSPECT_PLAYER_FASCIST("icon/icon-inspect-f.png"),
-	ACTION_INSPECT_PLAYER_COMMUNIST("icon/icon-inspect-c.png"),
-	ACTION_BLOCK_PLAYER_FASCIST("icon/icon-block-f.png"),
-	ACTION_BLOCK_PLAYER_COMMUNIST("icon/icon-block-c.png"),
+	ACTION_EXAMINE_TOP_CARDS_LIBERAL("action/top-cards-l.svg"),
+	ACTION_EXAMINE_TOP_CARDS_FASCIST("action/top-cards-f.svg"),
+	ACTION_EXAMINE_TOP_CARDS_COMMUNIST("action/top-cards-c.svg"),
+	ACTION_EXAMINE_TOP_CARDS_OTHER_LIBERAL("action/top-cards-other-l.svg"),
+	ACTION_EXAMINE_TOP_CARDS_OTHER_FASCIST("action/top-cards-other-f.svg"),
+	ACTION_EXAMINE_TOP_CARDS_OTHER_COMMUNIST("action/top-cards-other-c.svg"),
+	ACTION_KILL_PLAYER_LIBERAL("action/kill-l.svg"),
+	ACTION_KILL_PLAYER_FASCIST("action/kill-f.svg"),
+	ACTION_KILL_PLAYER_COMMUNIST("action/kill-c.svg"),
+	ACTION_PICK_PRESIDENT_LIBERAL("action/pick-president-l.svg"),
+	ACTION_PICK_PRESIDENT_FASCIST("action/pick-president-f.svg"),
+	ACTION_PICK_PRESIDENT_COMMUNIST("action/pick-president-c.svg"),
+	ACTION_INSPECT_PLAYER_LIBERAL("action/inspect-l.svg"),
+	ACTION_INSPECT_PLAYER_FASCIST("action/inspect-f.svg"),
+	ACTION_INSPECT_PLAYER_COMMUNIST("action/inspect-c.svg"),
+	ACTION_BLOCK_PLAYER_LIBERAL("action/block-l.svg"),
+	ACTION_BLOCK_PLAYER_FASCIST("action/block-f.svg"),
+	ACTION_BLOCK_PLAYER_COMMUNIST("action/block-c.svg"),
 
-	ICON_WIN_FASCIST("icon/icon-win-f.png"),
-	ICON_WIN_COMMUNIST("icon/icon-win-c.png"),
+	ICON_WIN_LIBERAL("action/win-l.svg"),
+	ICON_WIN_FASCIST("action/win-f.svg"),
+	ICON_WIN_COMMUNIST("action/win-c.svg"),
 
-	ICON_PLAYER_BLOCKED("icon/icon-player-blocked.png"),
-	ICON_PREVIOUS_PRESIDENT("icon/icon-player-previous-president.png"),
-	ICON_PREVIOUS_CHANCELLOR("icon/icon-player-previous-chancellor.png"),
-	ICON_PRESIDENT("icon/icon-president.png"),
-	ICON_CHANCELLOR("icon/icon-chancellor.png"),
-	ICON_YES("icon/icon-yes.png"),
-	ICON_NO("icon/icon-no.png"),
-	ICON_DEAD("icon/icon-dead.png"),
-	ICON_NOT_HITLER("icon/icon-not-hitler.png"),
-	ICON_NOT_STALIN("icon/icon-not-stalin.png"),
-	ICON_CONNECTION("icon/connection.png"),
+	ICON_PLAYER_BLOCKED("player/blocked.svg"),
+	ICON_PREVIOUS_PRESIDENT("player/previous-president.svg"),
+	ICON_PREVIOUS_CHANCELLOR("player/previous-chancellor.svg"),
+	ICON_PRESIDENT("player/president.svg"),
+	ICON_CHANCELLOR("player/chancellor.svg"),
+	ICON_YES("player/vote-yes.svg"),
+	ICON_NO("player/vote-no.svg"),
+	ICON_DEAD("player/dead.svg"),
+	ICON_NOT_HITLER("player/not-hitler.svg"),
+	ICON_NOT_STALIN("player/not-stalin.svg"),
+	ICON_CONNECTION("player/connection.svg"),
 
-	ICON_ROLE_LIBERAL("icon/role-liberal.png"),
-	ICON_ROLE_FASCIST("icon/role-fascist.png"),
-	ICON_ROLE_HITLER("icon/role-hitler.png"),
-	ICON_ROLE_COMMUNIST("icon/role-communist.png"),
-	ICON_ROLE_STALIN("icon/role-stalin.png"),
+	ICON_ROLE_LIBERAL("player/role-liberal.svg"),
+	ICON_ROLE_FASCIST("player/role-fascist.svg"),
+	ICON_ROLE_HITLER("player/role-hitler.svg"),
+	ICON_ROLE_COMMUNIST("player/role-communist.svg"),
+	ICON_ROLE_STALIN("player/role-stalin.svg"),
 	;
 
-	public static final String ASSETS_URL = "https://graphite-official.com/projects/ss/assets/";
+	public static final String ASSETS_URL = "https://sr.graphite-official.com/assets/";
 
 	private final String path;
-	private Bitmap bitmap;
+	private SVG svg;
 
 	GameAsset(String path) {
 		this.path = path;
@@ -72,43 +83,50 @@ public enum GameAsset {
 		return ASSETS_URL + path;
 	}
 
-	public boolean load(File filesDir) {
+	public boolean load(Context c, File filesDir) {
 		try {
-			File cachedFile = new File(filesDir, name() + ".png");
+			File cachedFile = new File(filesDir, name() + ".svg");
 			if(cachedFile.exists()) {
 				try(FileInputStream fIn = new FileInputStream(cachedFile)) {
-					this.bitmap = BitmapFactory.decodeStream(fIn);
+					this.svg = SVG.getFromInputStream(fIn);
 				}
-
-				bitmap.setHasAlpha(true);
 
 				return false;
 			}else {
+				ByteArrayOutputStream bOut = new ByteArrayOutputStream();
+
+				int len;
+				byte[] buf = new byte[1024];
 				try(InputStream in = new URL(getURL()).openStream()) {
-					this.bitmap = BitmapFactory.decodeStream(in);
+					while((len = in.read(buf)) > 0) {
+						bOut.write(buf, 0, len);
+					}
 				}
+
+				byte[] bytes = bOut.toByteArray();
+				this.svg = SVG.getFromInputStream(new ByteArrayInputStream(bytes));
 
 				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainActivity.getCurrentFragment().getContext());
 				if(prefs.getBoolean("cache_assets", true)) {
 					try (FileOutputStream fOut = new FileOutputStream(cachedFile)) {
-						bitmap.compress(Bitmap.CompressFormat.PNG, 100, fOut);
+						fOut.write(bytes);
 					}
 				}
 
 				return true;
 			}
-		}catch(IOException e) {
+		}catch(IOException | SVGParseException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public Bitmap getBitmap() {
-		return bitmap;
+	public SVG getSVG() {
+		return svg;
 	}
 
 	public static boolean isEverythingLoaded() {
 		for(GameAsset as : values()) {
-			if(as.getBitmap() == null) return false;
+			if(as.getSVG() == null) return false;
 		}
 		return true;
 	}

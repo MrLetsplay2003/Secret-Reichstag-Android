@@ -3,18 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/reichstag"
+    android:gravity="center"
     android:orientation="vertical">
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/round_shape"
         android:elevation="2dp"
         android:orientation="vertical"
@@ -91,9 +88,18 @@
             android:spinnerMode="dropdown" />
     </LinearLayout>
 
-    <Space
+    <Button
         android:layout_width="match_parent"
-        android:layout_height="25dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0"
+        android:background="@drawable/round_shape"
+        android:fontFamily="@font/germania_one_regular"
+        android:onClick="roomSettingsAdvanced"
+        android:text="Advanced Settings"
+        android:textSize="25sp" />
 
     <Button
         android:layout_width="match_parent"
@@ -106,10 +112,5 @@
         android:onClick="roomSettingsConfirm"
         android:text="@string/room_settings_create_room"
         android:textSize="25sp" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
 
 </LinearLayout>

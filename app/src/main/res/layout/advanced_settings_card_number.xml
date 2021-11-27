@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp" >
+
+    <Space
+        android:layout_width="10dp"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/advanced_card_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/germania_one_regular"
+        android:textColor="@color/text"
+        android:textSize="20sp"
+        tools:text="Liberal Cards" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <EditText
+        android:id="@+id/advanced_card_input"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/germania_one_regular"
+        android:textSize="20sp"
+        tools:text="0"
+        android:inputType="number" />
+
+    <Space
+        android:layout_width="10dp"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/advanced_card_increase"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/round_shape_circle"
+        android:fontFamily="sans-serif"
+        android:textSize="20sp"
+        android:text="+"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="10dp"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/advanced_card_decrease"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/round_shape_circle"
+        android:fontFamily="sans-serif"
+        android:textSize="20sp"
+        android:text="-"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="10dp"
+        android:layout_height="match_parent" />
+</LinearLayout>

@@ -1,0 +1,82 @@
+{
+	"SECRET_HITLER": {
+		"Secret Hitler: 5-6 players": {
+			"liberalActions": [],
+			"fascistActions": [
+				null,
+				null,
+				"EXAMINE_TOP_CARDS",
+				"KILL_PLAYER",
+				"KILL_PLAYER"
+			],
+			"liberalCards": 6,
+			"fascistCards": 11
+		},
+		"Secret Hitler: 7-8 players": {
+			"liberalActions": [],
+			"fascistActions": [
+				null,
+				"INSPECT_PLAYER",
+				"PICK_PRESIDENT",
+				"KILL_PLAYER",
+				"KILL_PLAYER"
+			],
+			"liberalCards": 6,
+			"fascistCards": 11
+		},
+		"Secret Hitler: 8-10 players": {
+			"liberalActions": [],
+			"fascistActions": [
+				"INSPECT_PLAYER",
+				"INSPECT_PLAYER",
+				"PICK_PRESIDENT",
+				"KILL_PLAYER",
+				"KILL_PLAYER"
+			],
+			"liberalCards": 6,
+			"fascistCards": 11
+		}
+	},
+	"SECRET_REICHSTAG": {
+		"Secret Reichstag: 7-8 players": {
+			"liberalActions": [],
+			"fascistActions": [
+				null,
+				"EXAMINE_TOP_CARDS",
+				"BLOCK_PLAYER",
+				"KILL_PLAYER",
+				"KILL_PLAYER"
+			],
+			"communistActions": [
+				null,
+				"EXAMINE_TOP_CARDS_OTHER",
+				"PICK_PRESIDENT",
+				"KILL_PLAYER",
+				"KILL_PLAYER"
+			],
+			"liberalCards": 9,
+			"fascistCards": 11,
+			"communistCards": 11
+		},
+		"Secret Reichstag: 9-14 players": {
+			"liberalActions": [],
+			"fascistActions": [
+				"INSPECT_PLAYER",
+				"PICK_PRESIDENT",
+				"BLOCK_PLAYER",
+				"KILL_PLAYER",
+				"KILL_PLAYER"
+			],
+			"communistActions": [
+				"INSPECT_PLAYER",
+				"INSPECT_PLAYER",
+				"EXAMINE_TOP_CARDS_OTHER",
+				"KILL_PLAYER",
+				"KILL_PLAYER"
+			],
+			"liberalCards": 9,
+			"fascistCards": 11,
+			"communistCards": 11
+		}
+	}
+}

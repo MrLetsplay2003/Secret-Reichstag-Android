@@ -4,18 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/reichstag"
+    android:gravity="center"
     android:orientation="vertical">
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/round_shape"
         android:orientation="vertical"
         android:paddingTop="10dp"
@@ -47,10 +44,6 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="25dp" />
-
     <Button
         android:id="@+id/button"
         android:layout_width="match_parent"
@@ -63,8 +56,4 @@
         android:text="@string/join_room_confirm"
         android:textSize="25sp" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
 </LinearLayout>

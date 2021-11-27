@@ -61,8 +61,8 @@ public class UICardStack extends SurfaceView implements SurfaceHolder.Callback {
 
 		canvas.drawPaint(p);
 
-		if(GameAsset.COMMUNIST_ARTICLE.getBitmap() != null) {
-			DrawUtils.drawBitmapAutoW(canvas, GameAsset.ARTICLE_BACK.getBitmap(), 0, 0, getHeight());
+		if(GameAsset.COMMUNIST_ARTICLE.getSVG() != null) {
+			DrawUtils.drawAutoW(canvas, GameAsset.ARTICLE_BACK.getSVG(), 0, 0, getHeight());
 		}
 
 		p.setColor(Color.WHITE);

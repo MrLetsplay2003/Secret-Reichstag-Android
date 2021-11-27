@@ -2,6 +2,7 @@ package me.mrletsplay.secretreichstagandroid;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.PictureDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
@@ -505,25 +506,32 @@ public class DefaultPacketListener implements PacketListener {
 			View.OnClickListener onClick = view -> {
 				if((boolean) view.getTag(R.string.card_active)) {
 					view.setTag(R.string.card_active, false);
-					((ImageView) view).setImageBitmap(GameAsset.ARTICLE_BACK.getBitmap());
+					ImageView i = (ImageView) view;
+					i.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+					i.setImageDrawable(new PictureDrawable(GameAsset.ARTICLE_BACK.getSVG().renderToPicture()));
 				}else {
 					view.setTag(R.string.card_active, true);
-					((ImageView) view).setImageBitmap(GameAsset.valueOf(cards.get((int) view.getTag(R.string.card_index)).getParty().name() + "_ARTICLE").getBitmap());
+					ImageView i = (ImageView) view;
+					i.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+					i.setImageDrawable(new PictureDrawable(GameAsset.valueOf(cards.get((int) view.getTag(R.string.card_index)).getParty().name() + "_ARTICLE").getSVG().renderToPicture()));
 				}
 			};
 
-			card1.setImageBitmap(GameAsset.valueOf(cards.get(0).getParty().name() + "_ARTICLE").getBitmap());
+			card1.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+			card1.setImageDrawable(new PictureDrawable(GameAsset.valueOf(cards.get(0).getParty().name() + "_ARTICLE").getSVG().renderToPicture()));
 			card1.setTag(R.string.card_index, 0);
 			if(dismiss) card1.setOnClickListener(onClick);
 
-			card2.setImageBitmap(GameAsset.valueOf(cards.get(1).getParty().name() + "_ARTICLE").getBitmap());
+			card2.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+			card2.setImageDrawable(new PictureDrawable(GameAsset.valueOf(cards.get(1).getParty().name() + "_ARTICLE").getSVG().renderToPicture()));
 			card2.setTag(R.string.card_index, 1);
 			if(dismiss) card2.setOnClickListener(onClick);
 
 			if(cards.size() < 3) {
 				((ViewGroup) card3.getParent()).removeView(card3);
 			}else {
-				card3.setImageBitmap(GameAsset.valueOf(cards.get(2).getParty().name() + "_ARTICLE").getBitmap());
+				card3.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+				card3.setImageDrawable(new PictureDrawable(GameAsset.valueOf(cards.get(2).getParty().name() + "_ARTICLE").getSVG().renderToPicture()));
 				card3.setTag(R.string.card_index, 2);
 				if(dismiss) card3.setOnClickListener(onClick);
 			}

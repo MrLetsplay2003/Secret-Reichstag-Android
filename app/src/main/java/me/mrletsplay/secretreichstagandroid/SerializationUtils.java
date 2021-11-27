@@ -75,15 +75,18 @@ public class SerializationUtils {
 	}
 
 	public static JSONObject serialize(Object obj) {
+		return (JSONObject) serialize0(obj);
+	}
+
+	public static Object serialize0(Object obj) {
 		try {
 			if(obj == null) return null;
-			JSONObject j = new JSONObject();
-			j.put("_class", obj.getClass().getCanonicalName());
 			if(obj instanceof Enum<?>) {
-				j.put("jsEnumName", ((Enum<?>) obj).name());
-				return j;
+				return ((Enum<?>) obj).name();
 			}
 
+			JSONObject j = new JSONObject();
+			j.put("_class", obj.getClass().getCanonicalName());
 			for(Field f : obj.getClass().getDeclaredFields()) {
 				f.setAccessible(true);
 				Object val = f.get(obj);
@@ -92,7 +95,7 @@ public class SerializationUtils {
 				}else if(val instanceof Number || val instanceof Boolean || val instanceof String) {
 					j.put(f.getName(), val);
 				}else {
-					j.put(f.getName(), serialize(f.get(obj)));
+					j.put(f.getName(), serialize0(f.get(obj)));
 				}
 			}
 
@@ -106,7 +109,7 @@ public class SerializationUtils {
 		if(list == null) return null;
 		JSONArray arr = new JSONArray();
 		for(Object o : list) {
-			arr.put(serialize(o));
+			arr.put(serialize0(o));
 		}
 		return arr;
 	}

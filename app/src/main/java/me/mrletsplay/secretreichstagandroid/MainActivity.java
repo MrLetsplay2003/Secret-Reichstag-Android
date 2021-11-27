@@ -1,34 +1,24 @@
 package me.mrletsplay.secretreichstagandroid;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.widget.ListViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.preference.EditTextPreference;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -38,12 +28,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import me.mrletsplay.secretreichstagandroid.fragment.AdvancedRoomSettingsFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.CreditsFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.GameFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.JoinRoomFragment;
@@ -53,7 +41,6 @@ import me.mrletsplay.secretreichstagandroid.fragment.SelectUsernameFragment;
 import me.mrletsplay.secretreichstagandroid.fragment.SettingsFragment;
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.game.Room;
-import me.mrletsplay.srweb.game.RoomSettings;
 import me.mrletsplay.srweb.game.state.GameRole;
 import me.mrletsplay.srweb.packet.Packet;
 import me.mrletsplay.srweb.packet.impl.PacketClientConnect;
@@ -81,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
 
 	private String roomID;
 
-	private String roomName;
-	private RoomSettings roomSettings;
+	private ExtendedRoomSettings roomSettings;
 
+	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -116,6 +103,8 @@ public class MainActivity extends AppCompatActivity {
 			loadAssets();
 		}
 
+		RoomSettingsDefaults.load(this);
+
 		getSupportFragmentManager().addOnBackStackChangedListener(() -> currentFragment = getSupportFragmentManager().findFragmentById(R.id.root_container));
 	}
 
@@ -126,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 			for(GameAsset a : GameAsset.values()) {
 				Thread t = new Thread(() -> {
 					try {
-						a.load(getCacheDir());
+						a.load(MainActivity.this, getCacheDir());
 					}catch(Exception e) {
 						errorOccurred.set(true);
 						e.printStackTrace();
@@ -190,23 +179,9 @@ public class MainActivity extends AppCompatActivity {
 		mHideHandler.sendEmptyMessageDelayed(0, 300);
 	}
 
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		/*System.out.println(event.getX());
-		System.out.println(event.getY());*/
-		//Toast.makeText(this, "TOUCH", Toast.LENGTH_LONG).show();
-		/*switch(event.getAction()) {
-			case MotionEvent.ACTION_MOVE:
-			{
-				System.out.println("MOVE ME");
-			}
-		}*/
-
-		return true;
-	}
-
 	public void newRoom(View v) {
-		loadFragment(new RoomSettingsFragment());
+		roomSettings = new ExtendedRoomSettings();
+		loadFragment(new RoomSettingsFragment(roomSettings));
 	}
 
 	public void joinRoom(View v) {
@@ -247,30 +222,21 @@ public class MainActivity extends AppCompatActivity {
 		((GameFragment) currentFragment).loadPlayerList();
 	}
 
+	public void roomSettingsAdvanced(View v) {
+		RoomSettingsFragment fr = (RoomSettingsFragment) currentFragment;
+		fr.applySettings(false);
+		loadFragment(new AdvancedRoomSettingsFragment(roomSettings));
+	}
+
+	public void roomSettingsConfirmAdvanced(View v) {
+		AdvancedRoomSettingsFragment fr = (AdvancedRoomSettingsFragment) currentFragment;
+		if(!fr.applySettings()) return;
+		onBackPressed();
+	}
+
 	public void roomSettingsConfirm(View v) {
 		RoomSettingsFragment fr = (RoomSettingsFragment) currentFragment;
-
-		if(fr.getRoomName().isEmpty()) {
-			Snackbar.make(findViewById(R.id.root_container), "You need to enter a room name", Snackbar.LENGTH_LONG).show();
-			return;
-		}
-
-		roomSettings = new RoomSettings();
-		roomSettings.setMode(fr.getSelectedGameMode().name());
-		switch(fr.getSelectedGameMode()) {
-			case SECRET_HITLER:
-				roomSettings.setCommunistCardCount(0);
-				roomSettings.setFascistCardCount(11);
-				roomSettings.setLiberalCardCount(6);
-				break;
-			case SECRET_REICHSTAG:
-				roomSettings.setCommunistCardCount(11);
-				roomSettings.setFascistCardCount(11);
-				roomSettings.setLiberalCardCount(9);
-				break;
-		}
-
-		roomName = fr.getRoomName();
+		if(!fr.applySettings(true)) return;
 		loadFragment(new SelectUsernameFragment());
 	}
 
@@ -304,9 +270,8 @@ public class MainActivity extends AppCompatActivity {
 		con.setPlayerName(fr.getUsername());
 		if(roomSettings != null) {
 			con.setCreateRoom(true);
-			con.setRoomName(roomName);
-			con.setRoomSettings(roomSettings);
-			roomSettings = null;
+			con.setRoomName(roomSettings.getRoomName());
+			con.setRoomSettings(roomSettings.getRoomSettings());
 		}else {
 			con.setCreateRoom(false);
 			con.setRoomID(roomID);
@@ -430,6 +395,8 @@ public class MainActivity extends AppCompatActivity {
 								.create().show());
 						return;
 					}
+
+					roomSettings = null;
 
 					PacketServerRoomInfo roomInfo = (PacketServerRoomInfo) p.getData();
 					room = roomInfo.getRoom();
