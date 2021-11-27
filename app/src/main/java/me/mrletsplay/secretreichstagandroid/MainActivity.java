@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
 	private ExtendedRoomSettings roomSettings;
 
-	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
