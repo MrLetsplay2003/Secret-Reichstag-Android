@@ -36,7 +36,7 @@
                 android:gravity="center_horizontal"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:text="@string/advanced_room_settings_title"
+                android:text="@string/advanced_title"
                 android:textColor="@color/text"
                 android:textSize="25sp" />
 
@@ -115,11 +115,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_weight="0"
         android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
         android:onClick="roomSettingsConfirmAdvanced"
-        android:text="@string/room_settings_create_room"
+        android:text="@string/advanced_confirm"
+        android:textSize="25sp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="0"
+        android:background="@drawable/round_shape"
+        android:fontFamily="@font/germania_one_regular"
+        android:onClick="back"
+        android:text="@string/back"
         android:textSize="25sp" />
 
 </LinearLayout>

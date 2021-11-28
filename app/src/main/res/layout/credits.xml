@@ -7,11 +7,6 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,12 +55,8 @@
         android:layout_marginEnd="10dp"
         android:background="@drawable/round_shape"
         android:fontFamily="@font/germania_one_regular"
-        android:onClick="creditsBack"
-        android:text="@string/credits_back"
+        android:onClick="back"
+        android:text="@string/back"
         android:textSize="25sp" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
 </LinearLayout>

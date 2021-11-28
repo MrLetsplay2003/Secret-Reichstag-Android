@@ -3,5 +3,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fontFamily="@font/germania_one_regular"
-    android:text="@string/actions_enable"
+    android:text="@string/advanced_actions_enable"
     android:textSize="18sp" />

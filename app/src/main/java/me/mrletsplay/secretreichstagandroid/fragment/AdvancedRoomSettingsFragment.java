@@ -99,7 +99,7 @@ public class AdvancedRoomSettingsFragment extends Fragment {
 	private EditText initCards(View v, int resID, GameParty party) {
 		LinearLayout ll = v.findViewById(resID);
 		TextView tv = ll.findViewById(R.id.advanced_card_label);
-		tv.setText(party.getFriendlyNameSingular() + " Cards");
+		tv.setText(getResources().getString(R.string.advanced_cards_label, party.getFriendlyNameSingular()));
 		EditText et = ll.findViewById(R.id.advanced_card_input);
 		et.setInputType(InputType.TYPE_CLASS_NUMBER);
 

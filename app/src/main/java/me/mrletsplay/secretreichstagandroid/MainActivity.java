@@ -281,10 +281,6 @@ public class MainActivity extends AppCompatActivity {
 		loadFragment(new CreditsFragment());
 	}
 
-	public void creditsBack(View v) {
-		loadFragment(new MainMenuFragment());
-	}
-
 	public void back(View v) {
 		onBackPressed();
 	}

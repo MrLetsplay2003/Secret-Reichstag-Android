@@ -13,8 +13,18 @@
     <string name="room_settings_room_name_hint">Room Name</string>
     <string name="room_settings_game_mode_label">Game Mode</string>
     <string name="room_settings_create_room">Create Room</string>
+    <string name="room_settings_advanced">Advanced Settings</string>
 
-    <string name="advanced_room_settings_title">Advanced Room Settings</string>
+    <string name="advanced_title">Advanced Room Settings</string>
+    <string name="advanced_actions_title">Actions</string>
+    <string name="advanced_actions_customize">Customize Actions</string>
+    <string name="advanced_actions_enable">Use custom board</string>
+    <string name="advanced_cards_title">Cards</string>
+    <string name="advanced_cards_label">%s Cards</string>
+    <string name="advanced_cards_increase">+</string>
+    <string name="advanced_cards_decrease">-</string>
+    <string name="advanced_load_defaults">Load Defaults</string>
+    <string name="advanced_confirm">Confirm</string>
 
     <string name="join_room_id_label">Room ID</string>
     <string name="join_room_id_hint">Room ID</string>
@@ -25,7 +35,6 @@
     <string name="select_username_confirm">Join Room</string>
 
     <string name="credits_label">Credits</string>
-    <string name="credits_back">Back</string>
     <string name="credits_text">\"Secret Reichstag\" is a modified version of the game \"Secret Hitler\" by Goat, Wolf, &amp; Cabbage LLC\nAll credit for the original game goes to them\n<a href="https://secrethitler.com">Original Game Website</a>\n\nLicense: CC BY-NC-SA 4.0\n\nThere\'s also a <a href="https://sr.graphite-official.com/">web version</a> available for playing the game on your PC\n\nDeveloped by: <a href="https://github.com/MrLetsplay2003">MrLetsplay2003</a>\nSource Code: <a href="https://github.com/MrLetsplay2003/Secret-Reichstag-Android">GitHub</a>\n\nApp Icon: <a href="https://github.com/Endergame15">Endergame15</a>\nIn-game Icons: Palme11100\n\nSpecial thanks to:\nAkito123321\nBlobert\nTheArrayser\n\nSupported by <a href="https://graphite-official.com">Graphite</a></string>
 
     <string name="event_log_start">The event log starts here</string>
@@ -64,18 +73,12 @@
     <string name="card_active">card_active</string>
     <string name="card_index">card_index</string>
 
+    <string name="settings_add_server">Add Server</string>
+    <string name="settings_add_server_name">Server Name</string>
+    <string name="settings_add_server_url">Server URL</string>
+    <string name="settings_remove_server">Remove Server</string>
+
     <string name="okay">Okay</string>
     <string name="cancel">Cancel</string>
-    <string name="add_server_name">Server Name</string>
-    <string name="add_server_url">Server URL</string>
-    <string name="advanced_actions_title">Actions</string>
-    <string name="advanced_actions_customize">Customize Actions</string>
-    <string name="advanced_cards_title">Cards</string>
-    <string name="advanced_load_defaults">Load Defaults</string>
-    <string name="actions_enable">Use custom board</string>
-    <string name="advanced_cards_increase">+</string>
-    <string name="advanced_cards_decrease">-</string>
-    <string name="settings_add_server">Add Server</string>
-    <string name="settings_remove_server">Remove Server</string>
-    <string name="room_settings_advanced">Advanced Settings</string>
+    <string name="back">Back</string>
 </resources>
