@@ -2,6 +2,8 @@ package me.mrletsplay.secretreichstagandroid;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 
 import androidx.preference.PreferenceManager;
 
@@ -70,6 +72,7 @@ public enum GameAsset {
 
 	private final String path;
 	private SVG svg;
+	private Bitmap cachedBitmap;
 
 	GameAsset(String path) {
 		this.path = path;
@@ -83,15 +86,13 @@ public enum GameAsset {
 		return ASSETS_URL + path;
 	}
 
-	public boolean load(Context c, File filesDir) {
+	public void load(Context c, File filesDir) {
 		try {
 			File cachedFile = new File(filesDir, name() + ".svg");
 			if(cachedFile.exists()) {
 				try(FileInputStream fIn = new FileInputStream(cachedFile)) {
 					this.svg = SVG.getFromInputStream(fIn);
 				}
-
-				return false;
 			}else {
 				ByteArrayOutputStream bOut = new ByteArrayOutputStream();
 
@@ -112,9 +113,10 @@ public enum GameAsset {
 						fOut.write(bytes);
 					}
 				}
-
-				return true;
 			}
+
+			cachedBitmap = Bitmap.createBitmap((int) svg.getDocumentWidth(), (int) svg.getDocumentHeight(), Bitmap.Config.ARGB_8888);
+			svg.renderToCanvas(new Canvas(cachedBitmap));
 		}catch(IOException | SVGParseException e) {
 			throw new RuntimeException(e);
 		}
@@ -122,6 +124,10 @@ public enum GameAsset {
 
 	public SVG getSVG() {
 		return svg;
+	}
+
+	public Bitmap getCachedBitmap() {
+		return cachedBitmap;
 	}
 
 	public static boolean isEverythingLoaded() {

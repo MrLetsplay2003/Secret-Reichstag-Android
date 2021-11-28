@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
 	private static boolean gamePaused;
 	private static List<String> eventLog = new ArrayList<>();
 
-
 	private String roomID;
 
 	private ExtendedRoomSettings roomSettings;
@@ -182,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	public void joinRoom(View v) {
+		roomSettings = null;
 		loadFragment(new JoinRoomFragment());
 	}
 
@@ -283,6 +283,10 @@ public class MainActivity extends AppCompatActivity {
 
 	public void creditsBack(View v) {
 		loadFragment(new MainMenuFragment());
+	}
+
+	public void back(View v) {
+		onBackPressed();
 	}
 
 	public void addServer(View v) {

@@ -2,12 +2,11 @@ package me.mrletsplay.secretreichstagandroid.ui;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import com.caverock.androidsvg.SVG;
+import me.mrletsplay.secretreichstagandroid.GameAsset;
 
 public class DrawUtils {
 
@@ -25,19 +24,16 @@ public class DrawUtils {
 		drawBitmap(c, b, x, y, (int) ((double) b.getWidth() / b.getHeight() * height), height);
 	}
 
-	public static void draw(Canvas c, SVG b, float x, float y, int width, int height) {
-		RectF dst = new RectF(x, y, x + width, y + height);
-		b.setDocumentWidth(width);
-		b.setDocumentHeight(height);
-		b.renderToCanvas(c, dst);
+	public static void draw(Canvas c, GameAsset b, float x, float y, int width, int height) {
+		drawBitmap(c, b.getCachedBitmap(), x, y, width, height);
 	}
 
-	public static void drawAutoH(Canvas c, SVG b, float x, float y, int width) {
-		draw(c, b, x, y, width, (int) ((double) b.getDocumentHeight() / b.getDocumentWidth() * width));
+	public static void drawAutoH(Canvas c, GameAsset b, float x, float y, int width) {
+		drawBitmapAutoH(c, b.getCachedBitmap(), x, y, width);
 	}
 
-	public static void drawAutoW(Canvas c, SVG b, float x, float y, int height) {
-		draw(c, b, x, y, (int) ((double) b.getDocumentWidth() / b.getDocumentHeight() * height), height);
+	public static void drawAutoW(Canvas c, GameAsset b, float x, float y, int height) {
+		drawBitmapAutoW(c, b.getCachedBitmap(), x, y, height);
 	}
 
 	public static void drawLinesCentered(Canvas c, Paint p, int centerX, int centerY, String... lines) {

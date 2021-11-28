@@ -119,16 +119,16 @@ public class UIGameBoard extends SurfaceView implements SurfaceHolder.Callback {
 
 				if(af != null) {
 					GameAsset icon = GameAsset.valueOf("ACTION_" + af.getAction().name() + "_" + party.name());
-					DrawUtils.drawAutoH(canvas, icon.getSVG(), x, y + cardHeight / 2 - cardWidth / 2, cardWidth);
+					DrawUtils.drawAutoH(canvas, icon, x, y + cardHeight / 2 - cardWidth / 2, cardWidth);
 				}
 
 				if(i == numCards - 1) {
 					GameAsset icon = GameAsset.valueOf("ICON_WIN_" + party.name());
-					DrawUtils.drawAutoH(canvas, icon.getSVG(), x, y + cardHeight / 2 - cardWidth / 2, cardWidth);
+					DrawUtils.drawAutoH(canvas, icon, x, y + cardHeight / 2 - cardWidth / 2, cardWidth);
 				}
 
 				if (board.getNumCards() > i)
-					DrawUtils.draw(canvas, GameAsset.valueOf(party.name() + "_ARTICLE").getSVG(), x, y, cardWidth, cardHeight);
+					DrawUtils.draw(canvas, GameAsset.valueOf(party.name() + "_ARTICLE"), x, y, cardWidth, cardHeight);
 			}
 		}
 
