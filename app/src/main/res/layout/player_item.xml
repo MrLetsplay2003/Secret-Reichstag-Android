@@ -6,7 +6,7 @@
     android:gravity="center">
 
     <TextView
-        android:id="@+id/chancellor_item_name"
+        android:id="@+id/player_item_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -16,5 +16,5 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:textSize="24sp"
-        tools:text="CHANCELLOR" />
+        tools:text="Player" />
 </LinearLayout>

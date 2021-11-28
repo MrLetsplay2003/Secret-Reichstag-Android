@@ -14,13 +14,13 @@ import me.mrletsplay.secretreichstagandroid.MainActivity;
 import me.mrletsplay.secretreichstagandroid.R;
 import me.mrletsplay.srweb.game.Player;
 
-public class ChancellorAdapter extends BaseAdapter {
+public class PlayerAdapter extends BaseAdapter {
 
 	private Context context;
 	private List<Player> players;
 	private Consumer<Player> onSelect;
 
-	public ChancellorAdapter(Context context, List<Player> players, Consumer<Player> onSelect) {
+	public PlayerAdapter(Context context, List<Player> players, Consumer<Player> onSelect) {
 		this.context = context;
 		this.players = players;
 		this.onSelect = onSelect;
@@ -44,10 +44,10 @@ public class ChancellorAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if(convertView == null) {
-			convertView = MainActivity.getCurrentFragment().getLayoutInflater().inflate(R.layout.chancellor_item, parent, false);
+			convertView = MainActivity.getCurrentFragment().getLayoutInflater().inflate(R.layout.player_item, parent, false);
 		}
 
-		TextView tv = convertView.findViewById(R.id.chancellor_item_name);
+		TextView tv = convertView.findViewById(R.id.player_item_name);
 		tv.setText(getItem(position).getName());
 
 		convertView.setOnClickListener(view -> onSelect.accept(getItem(position)));

@@ -76,7 +76,7 @@ public class AdvancedRoomSettingsFragment extends Fragment {
 			AlertDialog d = new AlertDialog.Builder(getContext())
 					.setView(lv)
 					.setNegativeButton(R.string.cancel, null)
-					.show();
+					.create();
 
 			lv.setOnItemClickListener((parent, view, position, id) -> {
 				String preset = pr.get(position);
@@ -84,6 +84,8 @@ public class AdvancedRoomSettingsFragment extends Fragment {
 				load(p);
 				d.dismiss();
 			});
+
+			d.show();
 		});
 
 		return v;

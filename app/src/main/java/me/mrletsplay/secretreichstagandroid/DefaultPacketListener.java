@@ -32,7 +32,7 @@ import java.util.Objects;
 
 import me.mrletsplay.secretreichstagandroid.fragment.GameFragment;
 import me.mrletsplay.secretreichstagandroid.ui.ActionDialog;
-import me.mrletsplay.secretreichstagandroid.ui.ChancellorAdapter;
+import me.mrletsplay.secretreichstagandroid.ui.PlayerAdapter;
 import me.mrletsplay.secretreichstagandroid.ui.MovableFloatingActionButton;
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.game.state.GameMoveState;
@@ -183,22 +183,6 @@ public class DefaultPacketListener implements PacketListener {
 							Networking.sendPacket(Packet.of(ch));
 						});
 			}else if(newState.getMoveState() == GameMoveState.DRAW_CARDS && newState.getPresident().getID().equals(MainActivity.getSelfPlayer().getID())) {
-				/*runOnUiThread(() -> {
-					AlertDialog drawDialog = new AlertDialog.Builder(fr.getContext())
-							.setTitle("Draw cards")
-							.setMessage("You need to draw some cards")
-							.setPositiveButton("Draw", (dl, which) -> {
-								dl.dismiss();
-								currentAlert = null;
-								Networking.sendPacket(Packet.of(new PacketClientDrawCards()));
-							})
-							.create();
-
-					currentAlert = drawDialog;
-
-					drawDialog.show();
-				});*/
-
 				runOnUiThread(() -> {
 					LayoutInflater inf = fr.getLayoutInflater();
 					View v = inf.inflate(R.layout.draw_cards, null);
@@ -472,7 +456,7 @@ public class DefaultPacketListener implements PacketListener {
 				players.add(pl);
 			}
 
-			lv.setAdapter(new ChancellorAdapter(MainActivity.getCurrentFragment().getContext(), players, player -> {
+			lv.setAdapter(new PlayerAdapter(MainActivity.getCurrentFragment().getContext(), players, player -> {
 				ad.dismiss();
 				callback.accept(player);
 			}));
